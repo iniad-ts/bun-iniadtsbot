@@ -1,0 +1,33 @@
+{
+    "editor.formatOnSave": true,
+    "editor.tabSize": 2,
+    "editor.codeActionsOnSave": {
+      "quickfix.biome": "explicit",
+      "source.organizeImports": "explicit",
+      "source.fixAll.eslint": "never"
+    },
+
+    "files.insertFinalNewline": true,
+    "files.trimTrailingWhitespace": true,
+    "files.trimFinalNewlines": true,
+
+    "explorer.fileNesting.enabled": true,
+    "explorer.fileNesting.patterns": {
+      "package.json": "pnpm-lock.yaml, tsconfig.json, biome.json, next.config.mjs, next-env.d.ts",
+      ".env.local": ".env.*",
+      ".gitignore": ".git*"
+    },
+
+    "[javascript]": {
+      "editor.defaultFormatter": "biomejs.biome"
+    },
+
+    "[typescript]": {
+      "editor.defaultFormatter": "biomejs.biome"
+    },
+
+    "javascript.suggest.autoImports": true,
+    "javascript.updateImportsOnFileMove.enabled": "always",
+    "typescript.suggest.autoImports": true,
+    "typescript.updateImportsOnFileMove.enabled": "always"
+  }
