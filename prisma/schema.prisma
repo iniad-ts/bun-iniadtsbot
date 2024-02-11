@@ -1,0 +1,34 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model daily_records {
+  id        Int       @id @default(autoincrement())
+  user_id   Int
+  check_in  DateTime  @db.Timestamp(6)
+  check_out DateTime? @db.Timestamp(6)
+  is_4f     Boolean
+  users     users     @relation(fields: [user_id], references: [user_id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model reserve {
+  id           Int     @id @default(autoincrement())
+  user_id      Int
+  reserve_date String  @db.VarChar(255)
+  has_priority Boolean
+  users        users   @relation(fields: [user_id], references: [user_id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model users {
+  user_id         Int             @id @default(autoincrement())
+  user_name       String
+  user_discord_id BigInt?
+  user_github_id  String?
+  daily_records   daily_records[]
+  reserve         reserve[]
+}
