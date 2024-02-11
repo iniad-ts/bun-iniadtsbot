@@ -3,12 +3,13 @@
   "author": "aelew",
   "license": "MIT",
   "scripts": {
-    "preinstall": "npx only-allow bun",
     "start": "bun run ./src/index.ts",
     "deploy": "bun run ./src/deploy.ts",
+    "preinstall": "npx only-allow bun",
     "format": "prettier --write ."
   },
   "dependencies": {
+    "@prisma/client": "5.9.1",
     "@t3-oss/env-core": "^0.8.0",
     "dayjs": "^1.11.10",
     "discord.js": "^14.14.1",
