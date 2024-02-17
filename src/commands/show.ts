@@ -39,7 +39,7 @@ const showCommand: Command<ChatInputCommandInteraction> = {
 			i.customId === "refresh" && i.user.id === interaction.user.id;
 		const collector = interaction.channel.createMessageComponentCollector({
 			filter,
-			time: 15000,
+			time: 150000,
 		});
 
 		collector.on("collect", async (i) => {
