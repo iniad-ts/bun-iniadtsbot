@@ -3,8 +3,9 @@
   "author": "aelew",
   "license": "MIT",
   "scripts": {
-    "start": "bun ./src/index.ts",
+    "dev": "bun ./src/index.ts",
     "deploy": "bun ./src/deploy.ts",
+    "start": " prisma generate && bun ./src/index.ts",
     "preinstall": "npx only-allow bun"
   },
   "dependencies": {
