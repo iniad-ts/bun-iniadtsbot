@@ -50,15 +50,20 @@ const inCommand: Command<ChatInputCommandInteraction> = {
 			dateTimeUTC = dayjs().utc();
 		} else if (time && !date) {
 			// timeのみ存在する場合: 現在の日付に時間を組み合わせ
-			const now = dayjs()
-				.hour(parseInt(time.split(":")[0]))
-				.minute(parseInt(time.split(":")[1]));
-			dateTimeUTC = now.tz("UTC");
+			const nowUTC = dayjs().utc();
+			const specifiedTime = dayjs(time, "HH:mm", true);
+			dateTimeUTC = nowUTC
+				.hour(specifiedTime.hour())
+				.minute(specifiedTime.minute());
 			console.log(dateTimeUTC.format());
 		} else {
 			// timeとdateが存在する場合: そのまま使用
-			const dateTime = dayjs(`${date} ${time}`);
-			dateTimeUTC = dateTime.tz("UTC");
+			const specifiedDateTime = dayjs(
+				`${date} ${time}`,
+				"YYYY/MM/DD HH:mm",
+				true,
+			);
+			dateTimeUTC = specifiedDateTime.tz("Asia/Tokyo", true).utc();
 			console.log(dateTimeUTC.format());
 		}
 		try {
