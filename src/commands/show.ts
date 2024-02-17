@@ -16,6 +16,8 @@ const showCommand: Command<ChatInputCommandInteraction> = {
 		await interaction.deferReply();
 		const embed = await buildEmbed();
 
+
+		//TODO: in/outもボタンで操作できるようにする?
 		const row = new ActionRowBuilder<ButtonBuilder>().addComponents(
 			new ButtonBuilder()
 				.setCustomId("refresh")

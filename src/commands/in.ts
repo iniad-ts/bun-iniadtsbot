@@ -15,57 +15,10 @@ dayjs.extend(customParseFormat);
 const inCommand: Command<ChatInputCommandInteraction> = {
 	data: new SlashCommandBuilder()
 		.setName("in")
-		.setDescription("入室用のコマンドです。")
-		.addStringOption((option) =>
-			option
-				.setName("time")
-				.setDescription(
-					"入室の時間を指定します。HH:mm形式で入力してください。",
-				),
-		)
-		.addStringOption((option) =>
-			option
-				.setName("date")
-				.setDescription(
-					"入室の日付を指定します。YYYY/MM/DD形式で入力してください。",
-				),
-		) as SlashCommandBuilder,
+		.setDescription("入室用のコマンドです。") as SlashCommandBuilder,
 	execute: async (interaction) => {
-		const time = interaction.options.getString("time");
-		const date = interaction.options.getString("date");
-
-		const timeIsValid = time ? dayjs(time, "HH:mm", true).isValid() : true;
-		const dateIsValid = date ? dayjs(date, "YYYY/MM/DD", true).isValid() : true;
-
-		if (!timeIsValid || !dateIsValid) {
-			await interaction.reply(
-				"入力された時間または日付の形式が正しくありません。",
-			);
-			return;
-		}
-
-		let dateTimeUTC: dayjs.Dayjs;
-		if (!time && !date) {
-			// timeもdateも存在しない場合: 現在時刻(Railway上はUTC)を取得
-			dateTimeUTC = dayjs().utc();
-		} else if (time && !date) {
-			// timeのみ存在する場合: 現在の日付に時間を組み合わせ
-			const nowUTC = dayjs().utc();
-			const specifiedTime = dayjs(time, "HH:mm", true);
-			dateTimeUTC = nowUTC
-				.hour(specifiedTime.hour())
-				.minute(specifiedTime.minute());
-			console.log(dateTimeUTC.format());
-		} else {
-			// timeとdateが存在する場合: そのまま使用
-			const specifiedDateTime = dayjs(
-				`${date} ${time}`,
-				"YYYY/MM/DD HH:mm",
-				true,
-			);
-			dateTimeUTC = specifiedDateTime.tz("Asia/Tokyo", true).utc();
-			console.log(dateTimeUTC.format());
-		}
+		// timeもdateも存在しない場合: 現在時刻(Railway上はUTC)を取得
+		const dateTimeUTC = dayjs().utc();
 		try {
 			await interaction.deferReply();
 			await officeAccessUseCase.checkIn(
