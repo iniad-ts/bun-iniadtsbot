@@ -7,6 +7,7 @@ export const env = createEnv({
 		DISCORD_BOT_TOKEN: z.string(),
 		DATABASE_URL: z.string(),
 		DISCORD_GUILD_ID: z.string(),
+		DISCORD_SHOW_CHANNEL_ID: z.string(),
 		DISCORD_CLIENT_ID: z.string(),
 	},
 });
