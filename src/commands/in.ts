@@ -54,10 +54,12 @@ const inCommand: Command<ChatInputCommandInteraction> = {
 				.hour(parseInt(time.split(":")[0]))
 				.minute(parseInt(time.split(":")[1]));
 			dateTimeUTC = now.utc();
+			console.log(dateTimeUTC.format());
 		} else {
 			// timeとdateが存在する場合: そのまま使用
 			const dateTime = dayjs(`${date} ${time}`);
 			dateTimeUTC = dateTime.utc();
+			console.log(dateTimeUTC.format());
 		}
 		try {
 			await interaction.deferReply();
