@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "bun ./src/index.ts",
     "deploy": "bun ./src/deploy.ts",
-    "start": " prisma generate && bun ./src/index.ts",
+    "start": "bun ./src/index.ts",
     "preinstall": "npx only-allow bun"
   },
   "dependencies": {
