@@ -18,7 +18,7 @@ const inCommand: Command<ChatInputCommandInteraction> = {
 		// モーダルの作成
 		const now = dayjs().tz("Asia/Tokyo");
 		const modal = new ModalBuilder()
-			.setCustomId("checkInModal")
+			.setCustomId("checkOutModal")
 			.setTitle("入室時間の入力");
 
 		// 日付入力フィールド
