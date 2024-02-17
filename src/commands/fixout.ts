@@ -15,7 +15,6 @@ const inCommand: Command<ChatInputCommandInteraction> = {
 		.setName("fixout")
 		.setDescription("指定した時間で退室します。\n退出を忘れた場合に使用してください。") as SlashCommandBuilder,
 	execute: async (interaction) => {
-		// モーダルの作成
 		const now = dayjs().tz("Asia/Tokyo");
 		const modal = new ModalBuilder()
 			.setCustomId("checkOutModal")
@@ -36,13 +35,11 @@ const inCommand: Command<ChatInputCommandInteraction> = {
 			.setStyle(TextInputStyle.Short)
 			.setValue(now.format("HH:mm"));
 
-		// アクションロウの追加
 		modal.addComponents(
 			new ActionRowBuilder<TextInputBuilder>().addComponents(dateInput),
 			new ActionRowBuilder<TextInputBuilder>().addComponents(timeInput),
 		);
 
-		// モーダルの表示
 		await interaction.showModal(modal);
 	},
 };

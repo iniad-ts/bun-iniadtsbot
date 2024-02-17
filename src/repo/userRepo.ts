@@ -40,6 +40,9 @@ const userRepository = {
 			where: { user_discord_id: userDiscordId },
 		});
 	},
+	findAllUsers: async () => {
+		return await prisma.users.findMany();
+	},
 
 	deleteUser: async (userId: number) => {
 		return await prisma.users.delete({

@@ -17,7 +17,6 @@ const inCommand: Command<ChatInputCommandInteraction> = {
 		.setName("in")
 		.setDescription("入室用のコマンドです。") as SlashCommandBuilder,
 	execute: async (interaction) => {
-		// timeもdateも存在しない場合: 現在時刻(Railway上はUTC)を取得
 		const dateTimeUTC = dayjs().utc();
 		try {
 			await interaction.deferReply();

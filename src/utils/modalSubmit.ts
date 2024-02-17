@@ -4,12 +4,10 @@ import utc from "dayjs/plugin/utc";
 import { ModalSubmitInteraction } from "discord.js";
 import officeAccessUseCase from "../usecase/officeAccessUseCase";
 
-// Day.jsのプラグインを有効化
 dayjs.extend(utc);
 dayjs.extend(timezone);
 
 async function processDateTime(date: string, time: string) {
-	// 日付と時間のバリデーション
 	const timeIsValid = time ? dayjs(time, "HH:mm", true).isValid() : false;
 	const dateIsValid = date ? dayjs(date, "YYYY/MM/DD", true).isValid() : false;
 

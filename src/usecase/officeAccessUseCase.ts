@@ -62,6 +62,41 @@ const officeAccessUseCase = {
 			);
 		return records;
 	},
+	ranking: async () => {
+		const records = await dailyRecordsRepository.findAllDailyRecords();
+		const users = await userRepository.findAllUsers();
+
+		const userStayTimes = users
+			.filter((user) => user)
+			.map((user) => {
+				const userRecords = records.filter(
+					(record) => user && record.user_id === user.user_id,
+				);
+				const stayTime = userRecords.reduce((total, record) => {
+					if (record.check_in && record.check_out) {
+						return (
+							total + (record.check_out.getTime() - record.check_in.getTime())
+						);
+					}
+					return total;
+				}, 0);
+				return { user, stayTime };
+			})
+			.sort((a, b) => b.stayTime - a.stayTime) 
+			.map(({ user, stayTime }) => {
+				const hours = Math.floor(stayTime / (1000 * 60 * 60));
+				const minutes = Math.floor((stayTime % (1000 * 60 * 60)) / (1000 * 60));
+				const seconds = Math.floor((stayTime % (1000 * 60)) / 1000);
+				const formattedStayTime = `${hours
+					.toString()
+					.padStart(2, "0")}:${minutes.toString().padStart(2, "0")}:${seconds
+					.toString()
+					.padStart(2, "0")}`;
+				return { user, stayTime: formattedStayTime };
+			});
+
+		return userStayTimes;
+	},
 };
 
 export default officeAccessUseCase;
