@@ -12,10 +12,8 @@ import { Command } from "../types";
 
 const inCommand: Command<ChatInputCommandInteraction> = {
 	data: new SlashCommandBuilder()
-		.setName("fixin")
-		.setDescription(
-			"指定した時間で入室します。\n入室を忘れた場合に使用してください。",
-		) as SlashCommandBuilder,
+		.setName("fixout")
+		.setDescription("指定した時間で退室します。\n退出を忘れた場合に使用してください。") as SlashCommandBuilder,
 	execute: async (interaction) => {
 		// モーダルの作成
 		const now = dayjs().tz("Asia/Tokyo");
