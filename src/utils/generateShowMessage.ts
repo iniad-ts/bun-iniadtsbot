@@ -1,7 +1,7 @@
 import dayjs from "dayjs";
 import timezone from "dayjs/plugin/timezone";
 import { EmbedBuilder } from "discord.js";
-import officeAccessUseCase from "../usecase/officeAccessUsecase";
+import officeAccessUseCase from "../usecase/officeAccessUseCase";
 
 dayjs.extend(timezone);
 

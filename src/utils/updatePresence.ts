@@ -1,5 +1,5 @@
 import { Client } from "discord.js";
-import officeAccessUseCase from "../usecase/officeAccessUsecase";
+import officeAccessUseCase from "../usecase/officeAccessUseCase";
 
 const updatePresence = async (client: Client) => {
 	if (!client.user) {

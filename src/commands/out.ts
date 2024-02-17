@@ -5,7 +5,7 @@ import utc from "dayjs/plugin/utc";
 import { ChatInputCommandInteraction, SlashCommandBuilder } from "discord.js";
 
 import { Command } from "../types";
-import officeAccessUseCase from "../usecase/officeAccessUsecase";
+import officeAccessUseCase from "../usecase/officeAccessUseCase";
 import updatePresence from "../utils/updatePresence";
 
 dayjs.extend(utc);
