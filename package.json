@@ -3,8 +3,8 @@
   "author": "aelew",
   "license": "MIT",
   "scripts": {
-    "start": "bun run ./src/index.ts",
-    "deploy": "bun run ./src/deploy.ts",
+    "start": "bun ./src/index.ts",
+    "deploy": "bun ./src/deploy.ts",
     "preinstall": "npx only-allow bun"
   },
   "dependencies": {
