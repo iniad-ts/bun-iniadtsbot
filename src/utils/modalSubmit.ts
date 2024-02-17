@@ -47,7 +47,7 @@ export async function handleModalSubmit(interaction: ModalSubmitInteraction) {
 				interaction.user.username,
 			);
 			await interaction.reply(
-				`入室時刻を以下のように記録しました: ${dateTimeUTC
+				`入室時刻を以下のように記録しました: \n${dateTimeUTC
 					.tz("Asia/Tokyo")
 					.format("YYYY/MM/DD HH:mm:ss")}`,
 			);
@@ -57,7 +57,7 @@ export async function handleModalSubmit(interaction: ModalSubmitInteraction) {
 				dateTimeUTC.toDate(),
 			);
 			await interaction.reply(
-				`退室時刻を以下のように記録しました: ${dateTimeUTC
+				`退室時刻を以下のように記録しました: \n${dateTimeUTC
 					.tz("Asia/Tokyo")
 					.format("YYYY/MM/DD HH:mm:ss")}`,
 			);
