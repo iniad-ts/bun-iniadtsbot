@@ -1,28 +1,31 @@
-import { Events } from 'discord.js';
+import { Events } from "discord.js";
 
-import { Event } from '../types';
+import { Event } from "../types";
+import { handleModalSubmit } from "../utils/modalSubmit";
 
 const interactionCreateEvent: Event<Events.InteractionCreate> = {
-  name: Events.InteractionCreate,
-  execute: async (interaction) => {
-    if (!interaction.isChatInputCommand()) return;
+	name: Events.InteractionCreate,
+	execute: async (interaction) => {
+		if (interaction.isModalSubmit()) await handleModalSubmit(interaction);
 
-    const command = interaction.client.commands.get(interaction.commandName);
-    if (!command) {
-      console.error('No matching command found.');
-      return;
-    }
+		if (!interaction.isChatInputCommand()) return;
 
-    try {
-      await command.execute(interaction);
-    } catch (error) {
-      console.error(error);
-      await interaction.reply({
-        content: 'An error occurred while executing your command.',
-        ephemeral: true
-      });
-    }
-  }
+		const command = interaction.client.commands.get(interaction.commandName);
+		if (!command) {
+			console.error("No matching command found.");
+			return;
+		}
+
+		try {
+			await command.execute(interaction);
+		} catch (error) {
+			console.error(error);
+			await interaction.reply({
+				content: "An error occurred while executing your command.",
+				ephemeral: true,
+			});
+		}
+	},
 };
 
 export default interactionCreateEvent;
