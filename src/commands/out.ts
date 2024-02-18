@@ -6,6 +6,7 @@ import { ChatInputCommandInteraction, SlashCommandBuilder } from "discord.js";
 
 import { Command } from "../types";
 import officeAccessUseCase from "../usecase/officeAccessUseCase";
+import { roleManage } from "../utils/roleManage";
 import updatePresence from "../utils/updatePresence";
 
 dayjs.extend(utc);
@@ -26,6 +27,7 @@ const outCommand: Command<ChatInputCommandInteraction> = {
 				BigInt(interaction.user.id),
 				dateTimeUTC.toDate(),
 			);
+			await roleManage.removeRole(interaction);
 			updatePresence(interaction.client);
 			const stayTime = dayjs(record.check_out).diff(
 				dayjs(record.check_in),

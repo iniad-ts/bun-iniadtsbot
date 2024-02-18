@@ -6,6 +6,7 @@ import { ChatInputCommandInteraction, SlashCommandBuilder } from "discord.js";
 
 import { Command } from "../types";
 import officeAccessUseCase from "../usecase/officeAccessUseCase";
+import { roleManage } from "../utils/roleManage";
 import updatePresence from "../utils/updatePresence";
 
 dayjs.extend(utc);
@@ -25,6 +26,7 @@ const inCommand: Command<ChatInputCommandInteraction> = {
 				dateTimeUTC.toDate(),
 				interaction.user.username,
 			);
+			await roleManage.addRole(interaction);
 			updatePresence(interaction.client);
 			await interaction.editReply(
 				`入室時刻を以下のように記録しました:\n ${dateTimeUTC

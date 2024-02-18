@@ -2,7 +2,8 @@ import dayjs from "dayjs";
 import timezone from "dayjs/plugin/timezone";
 import utc from "dayjs/plugin/utc";
 import { ModalSubmitInteraction } from "discord.js";
-import officeAccessUseCase from "../usecase/officeAccessUseCase";
+import officeAccessUseCase from "../../usecase/officeAccessUseCase";
+import { roleManage } from "../roleManage";
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -46,6 +47,7 @@ export async function handleModalSubmit(interaction: ModalSubmitInteraction) {
 				dateTimeUTC.toDate(),
 				interaction.user.username,
 			);
+			await roleManage.addRole(interaction);
 			await interaction.reply(
 				`入室時刻を以下のように記録しました: \n${dateTimeUTC
 					.tz("Asia/Tokyo")
@@ -56,6 +58,7 @@ export async function handleModalSubmit(interaction: ModalSubmitInteraction) {
 				BigInt(interaction.user.id),
 				dateTimeUTC.toDate(),
 			);
+			await roleManage.removeRole(interaction);
 			await interaction.reply(
 				`退室時刻を以下のように記録しました: \n${dateTimeUTC
 					.tz("Asia/Tokyo")
