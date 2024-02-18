@@ -1,12 +1,13 @@
 import { Events } from "discord.js";
-
 import { Event } from "../types";
-import { handleModalSubmit } from "../utils/modalSubmit";
+import { buttonSubmitHandler } from "../utils/handler/buttonSubmit";
+import { handleModalSubmit } from "../utils/handler/modalSubmit";
 
 const interactionCreateEvent: Event<Events.InteractionCreate> = {
 	name: Events.InteractionCreate,
 	execute: async (interaction) => {
 		if (interaction.isModalSubmit()) await handleModalSubmit(interaction);
+		if (interaction.isButton()) await buttonSubmitHandler(interaction);
 
 		if (!interaction.isChatInputCommand()) return;
 

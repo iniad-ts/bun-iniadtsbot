@@ -18,42 +18,44 @@ const readyEvent: Event<Events.ClientReady> = {
 
 		console.log(`Bot ready! Logged in as ${client.user.tag}.`);
 
-		const channelId = env.DISCORD_SHOW_CHANNEL_ID;
+		//再起動時に特定チャンネルに/showの中身を送信する処理. 再起動跨いでも更新できそうなのでコメントアウト
 
-		const channel = client.channels.cache.get(channelId);
-		if (!channel) {
-			console.log(`Channel with ID ${channelId} was not found.`);
-			return;
-		}
-		if (!channel.isTextBased()) {
-			console.log(`Channel with ID ${channelId} is not a text channel.`);
-			return;
-		}
+		// const channelId = env.DISCORD_SHOW_CHANNEL_ID;
 
-		const embed = await buildEmbed();
+		// const channel = client.channels.cache.get(channelId);
+		// if (!channel) {
+		// 	console.log(`Channel with ID ${channelId} was not found.`);
+		// 	return;
+		// }
+		// if (!channel.isTextBased()) {
+		// 	console.log(`Channel with ID ${channelId} is not a text channel.`);
+		// 	return;
+		// }
 
-		const row = new ActionRowBuilder<ButtonBuilder>().addComponents(
-			new ButtonBuilder()
-				.setCustomId("refresh")
-				.setLabel("更新")
-				.setStyle(ButtonStyle.Primary),
-		);
+		// const embed = await buildEmbed();
 
-		await channel.send({ embeds: [embed], components: [row] });
+		// const row = new ActionRowBuilder<ButtonBuilder>().addComponents(
+		// 	new ButtonBuilder()
+		// 		.setCustomId("refresh")
+		// 		.setLabel("更新")
+		// 		.setStyle(ButtonStyle.Primary),
+		// );
 
-		const filter = (i) =>
-			i.customId === "refresh" && i.user.id === client.user.id;
-		const collector = channel.createMessageComponentCollector({
-			filter,
-			time: 15000,
-		});
+		// await channel.send({ embeds: [embed], components: [row] });
 
-		collector.on("collect", async (i) => {
-			if (i.customId === "refresh") {
-				const updatedEmbed = await buildEmbed();
-				await i.update({ embeds: [updatedEmbed], components: [row] });
-			}
-		});
+		// const filter = (i) =>
+		// 	i.customId === "refresh" && i.user.id === client.user.id;
+		// const collector = channel.createMessageComponentCollector({
+		// 	filter,
+		// 	time: 15000,
+		// });
+
+		// collector.on("collect", async (i) => {
+		// 	if (i.customId === "refresh") {
+		// 		const updatedEmbed = await buildEmbed();
+		// 		await i.update({ embeds: [updatedEmbed], components: [row] });
+		// 	}
+		// });
 	},
 };
 

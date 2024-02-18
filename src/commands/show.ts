@@ -16,7 +16,6 @@ const showCommand: Command<ChatInputCommandInteraction> = {
 		await interaction.deferReply();
 		const embed = await buildEmbed();
 
-
 		//TODO: in/outもボタンで操作できるようにする?
 		const row = new ActionRowBuilder<ButtonBuilder>().addComponents(
 			new ButtonBuilder()
@@ -34,24 +33,6 @@ const showCommand: Command<ChatInputCommandInteraction> = {
 		}
 
 		await interaction.editReply({ embeds: [embed], components: [row] });
-
-		const filter = (i) =>
-			i.customId === "refresh" && i.user.id === interaction.user.id;
-		const collector = interaction.channel.createMessageComponentCollector({
-			filter,
-			time: 150000,
-		});
-
-		collector.on("collect", async (i) => {
-			if (i.customId === "refresh") {
-				const updatedEmbed = await buildEmbed();
-				if (!interaction.channel) {
-					console.log("Channel is not available.");
-					return;
-				}
-				await i.update({ embeds: [updatedEmbed], components: [row] });
-			}
-		});
 	},
 };
 
