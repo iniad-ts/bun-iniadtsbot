@@ -62,7 +62,7 @@ const officeAccessUseCase = {
 			);
 		return records;
 	},
-	ranking: async () => {
+	ranking_all: async () => {
 		const records = await dailyRecordsRepository.findAllDailyRecords();
 		const users = await userRepository.findAllUsers();
 

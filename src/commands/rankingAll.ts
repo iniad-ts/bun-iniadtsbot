@@ -8,14 +8,14 @@ import officeAccessUseCase from "../usecase/officeAccessUseCase";
 
 const showCommand: Command<ChatInputCommandInteraction> = {
 	data: new SlashCommandBuilder()
-		.setName("ranking")
+		.setName("ranking_all")
 		.setDescription(
 			"滞在時間のランキングを表示します。(全期間)",
 		) as SlashCommandBuilder,
 	execute: async (interaction) => {
 		try {
 			await interaction.deferReply();
-			const rankingData = await officeAccessUseCase.ranking();
+			const rankingData = await officeAccessUseCase.ranking_all();
 
 			const embed = new EmbedBuilder()
 				.setTitle("入室中のユーザー")
