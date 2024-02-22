@@ -82,7 +82,7 @@ const officeAccessUseCase = {
 				}, 0);
 				return { user, stayTime };
 			})
-			.sort((a, b) => b.stayTime - a.stayTime) 
+			.sort((a, b) => b.stayTime - a.stayTime)
 			.map(({ user, stayTime }) => {
 				const hours = Math.floor(stayTime / (1000 * 60 * 60));
 				const minutes = Math.floor((stayTime % (1000 * 60 * 60)) / (1000 * 60));
