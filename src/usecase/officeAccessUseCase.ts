@@ -62,6 +62,39 @@ const officeAccessUseCase = {
 			);
 		return records;
 	},
+	ranking: async (from: Date, until: Date) => {
+		const records = await dailyRecordsRepository.findDailyRecordsInDateRange(
+			from,
+			until,
+		);
+		const users = await userRepository.findAllUsers();
+
+		const userStayTimes = users
+			.map((user) => {
+				const stayTime = records
+					.filter((record) => record.user_id === user.user_id)
+					.reduce((total, { check_out, check_in }) => {
+						const lastTime = check_out ?? new Date();
+						const stayTime = lastTime.getTime() - check_in.getTime();
+						return total + stayTime;
+					}, 0);
+
+				return { user, stayTime };
+			})
+			.sort((a, b) => b.stayTime - a.stayTime)
+			.map(({ user, stayTime: time }) => {
+				const hours = Math.floor(time / (1000 * 60 * 60));
+				const minutes = Math.floor((time % (1000 * 60 * 60)) / (1000 * 60));
+				const seconds = Math.floor((time % (1000 * 60)) / 1000);
+				const stayTime = [hours, minutes, seconds]
+					.map((time) => time.toString().padStart(2, "0"))
+					.join(":");
+
+				return { user, stayTime };
+			});
+
+		return userStayTimes;
+	},
 	ranking_all: async () => {
 		const records = await dailyRecordsRepository.findAllDailyRecords();
 		const users = await userRepository.findAllUsers();
