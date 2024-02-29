@@ -31,14 +31,13 @@ const showCommand: Command<ChatInputCommandInteraction> = {
 					return { from: new Date(0), until: new Date(untilString) };
 
 				const currentDate = new Date();
-				const oneMonthAgo = (() => {
-					const date = new Date();
-					date.setMonth(date.getMonth() - 1);
-					if (date.getMonth() === new Date().getMonth()) date.setDate(0);
-					return date;
+				const startOfMonth = (() => {
+					const now = new Date();
+					const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+					return startOfMonth;
 				})();
 
-				return { from: oneMonthAgo, until: currentDate };
+				return { from: startOfMonth, until: currentDate };
 			})();
 
 			for (const date of [from, until]) {
