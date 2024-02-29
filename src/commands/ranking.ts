@@ -41,6 +41,13 @@ const showCommand: Command<ChatInputCommandInteraction> = {
 				return { from: oneMonthAgo, until: currentDate };
 			})();
 
+			for (const date of [from, until]) {
+				if (date.toString() === "Invalid Date") {
+					await interaction.editReply({ content: "日付の形式が不正です。" });
+					return;
+				}
+			}
+
 			const rankingData = await officeAccessUseCase.ranking(from, until);
 			const embed = new EmbedBuilder()
 				.setTitle("滞在時間のランキング")
