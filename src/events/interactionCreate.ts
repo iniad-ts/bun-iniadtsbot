@@ -1,5 +1,5 @@
 import { Events } from "discord.js";
-import { Event } from "../types";
+import type { Event } from "../types";
 import { buttonSubmitHandler } from "../utils/handler/buttonSubmit";
 import { handleModalSubmit } from "../utils/handler/modalSubmit";
 

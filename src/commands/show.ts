@@ -5,7 +5,7 @@ import {
   ChatInputCommandInteraction,
   SlashCommandBuilder,
 } from "discord.js";
-import { Command } from "../types";
+import type { Command } from "../types";
 import { buildEmbed } from "../utils/generateShowMessage";
 
 const showCommand: Command<ChatInputCommandInteraction> = {

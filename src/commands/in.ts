@@ -4,7 +4,7 @@ import timezone from "dayjs/plugin/timezone";
 import utc from "dayjs/plugin/utc";
 import { ChatInputCommandInteraction, SlashCommandBuilder } from "discord.js";
 
-import { Command } from "../types";
+import type { Command } from "../types";
 import officeAccessUseCase from "../usecase/officeAccessUseCase";
 import { roleManage } from "../utils/roleManage";
 import updatePresence from "../utils/updatePresence";

@@ -1,4 +1,4 @@
-import { users } from "@prisma/client";
+import type { users } from "@prisma/client";
 import dailyRecordsRepository from "../repo/dailyRecordRepo";
 import userRepository from "../repo/userRepo";
 
