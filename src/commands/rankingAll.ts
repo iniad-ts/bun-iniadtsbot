@@ -12,7 +12,7 @@ const showCommand: Command<ChatInputCommandInteraction> = {
     .setDescription("滞在時間のランキングを表示します。(全期間)")
     .addBooleanOption((option) =>
       option
-        .setName("showAllMembers")
+        .setName("showallmembers")
         .setDescription("全メンバーを表示する")
         .setRequired(false),
     ) as SlashCommandBuilder,

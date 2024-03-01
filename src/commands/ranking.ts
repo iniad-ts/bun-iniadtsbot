@@ -18,7 +18,7 @@ const showCommand: Command<ChatInputCommandInteraction> = {
     )
     .addBooleanOption((option) =>
       option
-        .setName("showAllMembers")
+        .setName("showallmembers")
         .setDescription("全メンバーを表示する")
         .setRequired(false),
     ) as SlashCommandBuilder,
