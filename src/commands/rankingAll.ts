@@ -9,18 +9,26 @@ import officeAccessUseCase from "../usecase/officeAccessUseCase";
 const showCommand: Command<ChatInputCommandInteraction> = {
   data: new SlashCommandBuilder()
     .setName("ranking_all")
-    .setDescription(
-      "滞在時間のランキングを表示します。(全期間)",
+    .setDescription("滞在時間のランキングを表示します。(全期間)")
+    .addBooleanOption((option) =>
+      option
+        .setName("showAllMembers")
+        .setDescription("全期間を表示する")
+        .setRequired(false),
     ) as SlashCommandBuilder,
   execute: async (interaction) => {
     try {
       await interaction.deferReply();
+      const showAllMembers = interaction.options.getBoolean("showAllMembers");
       const rankingData = await officeAccessUseCase.ranking_all();
 
       const embed = new EmbedBuilder()
         .setTitle("入室中のユーザー")
         .setColor("#0099ff");
-      const top25RankingData = rankingData.slice(0, 25);
+      const top25RankingData = rankingData.slice(
+        0,
+        showAllMembers ? rankingData.length : 25,
+      );
 
       const embedFields = top25RankingData.map((data, index) => {
         return {
