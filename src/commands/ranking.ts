@@ -11,10 +11,10 @@ const showCommand: Command<ChatInputCommandInteraction> = {
     .setName("ranking")
     .setDescription("滞在時間のランキングを表示します。")
     .addStringOption((option) =>
-      option.setName("from").setDescription("開始日").setRequired(true),
+      option.setName("from").setDescription("開始日").setRequired(false),
     )
     .addStringOption((option) =>
-      option.setName("until").setDescription("終了日").setRequired(true),
+      option.setName("until").setDescription("終了日").setRequired(false),
     ) as SlashCommandBuilder,
   execute: async (interaction) => {
     try {
@@ -48,8 +48,12 @@ const showCommand: Command<ChatInputCommandInteraction> = {
       }
 
       const rankingData = await officeAccessUseCase.ranking(from, until);
+      const [fromString, untilString] = [from, until].map((date) => {
+        return date.toLocaleDateString("ja-JP");
+      });
+
       const embed = new EmbedBuilder()
-        .setTitle("滞在時間のランキング")
+        .setTitle(`滞在時間のランキング (${fromString} ~ ${untilString})`)
         .setColor("#0099ff");
       const top25RankingData = rankingData.slice(0, 25);
 
