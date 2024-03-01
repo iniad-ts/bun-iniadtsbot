@@ -22,26 +22,33 @@ const showCommand: Command<ChatInputCommandInteraction> = {
       const showAllMembers = interaction.options.getBoolean("showAllMembers");
       const rankingData = await officeAccessUseCase.ranking_all();
 
-      const embed = new EmbedBuilder()
-        .setTitle("入室中のユーザー")
-        .setColor("#0099ff");
-      const top25RankingData = rankingData.slice(
-        0,
-        showAllMembers ? rankingData.length : 25,
-      );
+      if (showAllMembers) {
+        const title = "入室中のユーザー";
+        const message = rankingData
+          .map((data) => {
+            return `${data.user?.user_name} 滞在時間: ${data.stayTime}`;
+          })
+          .join("\n");
+        await interaction.editReply(`# ${title}\n${message}`);
+      } else {
+        const embed = new EmbedBuilder()
+          .setTitle("入室中のユーザー")
+          .setColor("#0099ff");
+        const top25RankingData = rankingData.slice(0, 25);
 
-      const embedFields = top25RankingData.map((data, index) => {
-        return {
-          name: `${index + 1}位: ${data.user?.user_name}`,
-          value: `滞在時間: ${data.stayTime}`,
-        };
-      });
+        const embedFields = top25RankingData.map((data, index) => {
+          return {
+            name: `${index + 1}位: ${data.user?.user_name}`,
+            value: `滞在時間: ${data.stayTime}`,
+          };
+        });
 
-      for (const field of embedFields) {
-        embed.addFields(field);
+        for (const field of embedFields) {
+          embed.addFields(field);
+        }
+
+        await interaction.editReply({ embeds: [embed] });
       }
-
-      await interaction.editReply({ embeds: [embed] });
     } catch (error) {
       console.error(error);
       await interaction.editReply({ content: "エラーが発生しました。" });
