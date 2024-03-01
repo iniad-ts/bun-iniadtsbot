@@ -7,7 +7,7 @@ import {
   TextInputBuilder,
   TextInputStyle,
 } from "discord.js";
-import { Command } from "../types";
+import type { Command } from "../types";
 ("../types");
 
 const inCommand: Command<ChatInputCommandInteraction> = {

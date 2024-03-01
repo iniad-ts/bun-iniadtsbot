@@ -6,8 +6,8 @@ import {
 } from "discord.js";
 
 import { env } from "../env";
-import { Event } from "../types";
 import { buildEmbed } from "../utils/generateShowMessage";
+import type { Event } from "../types";
 import updatePresence from "../utils/updatePresence";
 
 const readyEvent: Event<Events.ClientReady> = {

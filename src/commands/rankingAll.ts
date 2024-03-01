@@ -3,7 +3,7 @@ import {
   EmbedBuilder,
   SlashCommandBuilder,
 } from "discord.js";
-import { Command } from "../types";
+import type { Command } from "../types";
 import officeAccessUseCase from "../usecase/officeAccessUseCase";
 
 const showCommand: Command<ChatInputCommandInteraction> = {
