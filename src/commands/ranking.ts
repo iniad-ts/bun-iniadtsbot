@@ -48,8 +48,12 @@ const showCommand: Command<ChatInputCommandInteraction> = {
 			}
 
 			const rankingData = await officeAccessUseCase.ranking(from, until);
+			const [fromString, untilString] = [from, until].map((date) => {
+				return date.toLocaleDateString("ja-JP");
+			});
+
 			const embed = new EmbedBuilder()
-				.setTitle("滞在時間のランキング")
+				.setTitle(`滞在時間のランキング (${fromString} ~ ${untilString})`)
 				.setColor("#0099ff");
 			const top25RankingData = rankingData.slice(0, 25);
 
