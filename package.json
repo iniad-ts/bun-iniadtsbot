@@ -6,7 +6,8 @@
     "dev": "bun ./src/index.ts",
     "deploy": "bun ./src/deploy.ts",
     "start": "bun ./src/index.ts",
-    "preinstall": "npx only-allow bun"
+    "preinstall": "npx only-allow bun",
+    "format": "biome format --write ./src/"
   },
   "dependencies": {
     "@prisma/client": "5.9.1",
