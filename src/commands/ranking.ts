@@ -26,7 +26,7 @@ const showCommand: Command<ChatInputCommandInteraction> = {
     try {
       await interaction.deferReply();
 
-      const showAllMembers = interaction.options.getBoolean("showAllMembers");
+      const showAllMembers = interaction.options.getBoolean("showallmembers");
       const { from, until } = (() => {
         const fromString = interaction.options.getString("from");
         const untilString = interaction.options.getString("until");

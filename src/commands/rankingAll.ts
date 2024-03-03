@@ -19,7 +19,7 @@ const showCommand: Command<ChatInputCommandInteraction> = {
   execute: async (interaction) => {
     try {
       await interaction.deferReply();
-      const showAllMembers = interaction.options.getBoolean("showAllMembers");
+      const showAllMembers = interaction.options.getBoolean("showallmembers");
       const rankingData = await officeAccessUseCase.ranking_all();
 
       if (showAllMembers) {
