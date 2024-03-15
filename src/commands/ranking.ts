@@ -4,7 +4,7 @@ import {
   type ChatInputCommandInteraction,
 } from "discord.js";
 import type { Command } from "../types";
-import officeAccessUseCase from "../usecase/officeAccessUseCase";
+import rankingUseCase from "../usecase/rankingUseCase";
 
 const showCommand: Command<ChatInputCommandInteraction> = {
   data: new SlashCommandBuilder()
@@ -55,7 +55,7 @@ const showCommand: Command<ChatInputCommandInteraction> = {
         }
       }
 
-      const rankingData = await officeAccessUseCase.ranking(from, until);
+      const rankingData = await rankingUseCase.ranking(from, until);
       const [fromString, untilString] = [from, until].map((date) => {
         return date.toLocaleDateString("ja-JP");
       });
