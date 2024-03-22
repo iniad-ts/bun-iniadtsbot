@@ -4,7 +4,7 @@ import {
   SlashCommandBuilder,
 } from "discord.js";
 import type { Command } from "../types";
-import officeAccessUseCase from "../usecase/officeAccessUseCase";
+import rankingUseCase from "../usecase/rankingUseCase";
 
 const showCommand: Command<ChatInputCommandInteraction> = {
   data: new SlashCommandBuilder()
@@ -20,7 +20,7 @@ const showCommand: Command<ChatInputCommandInteraction> = {
     try {
       await interaction.deferReply();
       const showAllMembers = interaction.options.getBoolean("showallmembers");
-      const rankingData = await officeAccessUseCase.ranking_all();
+      const rankingData = await rankingUseCase.ranking_all();
 
       if (showAllMembers) {
         const title = "入室中のユーザー";
