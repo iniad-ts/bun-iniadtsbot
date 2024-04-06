@@ -66,6 +66,6 @@ export async function handleModalSubmit(interaction: ModalSubmitInteraction) {
       );
     }
   } catch (error) {
-    await interaction.reply(`エラーが発生しました: ${error.message}`);
+    await interaction.reply("エラーが発生しました。");
   }
 }
