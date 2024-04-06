@@ -4,7 +4,7 @@ import {
   ButtonInteraction,
   ButtonStyle,
 } from "discord.js";
-import { buildEmbed } from "../generateShowMessage";
+import { buildShowEmbed } from "../buildShowEmbed";
 
 const handleShowRefreshButtonSubmit = async (
   interaction: ButtonInteraction,
@@ -17,7 +17,7 @@ const handleShowRefreshButtonSubmit = async (
         .setStyle(ButtonStyle.Primary),
     );
 
-    const updatedEmbed = await buildEmbed();
+    const updatedEmbed = await buildShowEmbed();
     if (!interaction.channel) {
       console.log("Channel is not available.");
       return;
