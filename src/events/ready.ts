@@ -1,12 +1,5 @@
-import {
-  ActionRowBuilder,
-  ButtonBuilder,
-  ButtonStyle,
-  Events,
-} from "discord.js";
+import { Events } from "discord.js";
 
-import { env } from "../env";
-import { buildEmbed } from "../utils/generateShowMessage";
 import type { Event } from "../types";
 import updatePresence from "../utils/updatePresence";
 
@@ -32,7 +25,7 @@ const readyEvent: Event<Events.ClientReady> = {
     // 	return;
     // }
 
-    // const embed = await buildEmbed();
+    // const embed = await buildShowEmbed();
 
     // const row = new ActionRowBuilder<ButtonBuilder>().addComponents(
     // 	new ButtonBuilder()
@@ -52,7 +45,7 @@ const readyEvent: Event<Events.ClientReady> = {
 
     // collector.on("collect", async (i) => {
     // 	if (i.customId === "refresh") {
-    // 		const updatedEmbed = await buildEmbed();
+    // 		const updatedEmbed = await buildShowEmbed();
     // 		await i.update({ embeds: [updatedEmbed], components: [row] });
     // 	}
     // });
