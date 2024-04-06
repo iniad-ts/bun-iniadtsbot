@@ -9,7 +9,7 @@ import rankingUseCase from "../usecase/rankingUseCase";
 const showCommand: Command<ChatInputCommandInteraction> = {
   data: new SlashCommandBuilder()
     .setName("ranking_all")
-    .setDescription("滞在時間のランキングを表示します。(全期間)")
+    .setDescription("滞在時間のランキングを表示します。(今学期の全期間)")
     .addBooleanOption((option) =>
       option
         .setName("showallmembers")
@@ -23,7 +23,9 @@ const showCommand: Command<ChatInputCommandInteraction> = {
       const rankingData = await rankingUseCase.ranking_all();
 
       if (showAllMembers) {
-        const title = "入室中のユーザー";
+        const title = `滞在時間のランキング (${new Date().getFullYear()}/4~${
+          new Date().getFullYear() + 1
+        }/3)`;
         const message = rankingData
           .map((data) => {
             return `${data.user?.user_name} 滞在時間: ${data.stayTime}`;
@@ -32,7 +34,11 @@ const showCommand: Command<ChatInputCommandInteraction> = {
         await interaction.editReply(`# ${title}\n${message}`);
       } else {
         const embed = new EmbedBuilder()
-          .setTitle("入室中のユーザー")
+          .setTitle(
+            `滞在時間のランキング (${new Date().getFullYear()}/4~${
+              new Date().getFullYear() + 1
+            }/3)`,
+          )
           .setColor("#0099ff");
         const top25RankingData = rankingData.slice(0, 25);
 

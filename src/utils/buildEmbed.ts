@@ -5,7 +5,7 @@ import officeAccessUseCase from "../usecase/officeAccessUseCase";
 
 dayjs.extend(timezone);
 
-export const buildEmbed = async () => {
+export const buildShowEmbed = async () => {
   const unCheckedOutInfo = await officeAccessUseCase.show();
   const embed = new EmbedBuilder()
     .setTitle("入室中のユーザー")
