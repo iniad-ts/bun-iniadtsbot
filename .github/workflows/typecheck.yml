@@ -1,4 +1,4 @@
-name: Example
+name: typecheck
 
 on: [push, pull_request]
 
@@ -15,5 +15,5 @@ jobs:
       - name: Install dependencies
         run: bun install
 
-      - name: Run lint
+      - name: Run typecheck
         run: bun run tsc --noEmit
