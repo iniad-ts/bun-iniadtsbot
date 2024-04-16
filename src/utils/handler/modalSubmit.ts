@@ -4,6 +4,7 @@ import utc from "dayjs/plugin/utc";
 import { ModalSubmitInteraction } from "discord.js";
 import officeAccessUseCase from "../../usecase/officeAccessUseCase";
 import { roleManage } from "../roleManage";
+import updatePresence from "../updatePresence";
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -42,23 +43,25 @@ export async function handleModalSubmit(interaction: ModalSubmitInteraction) {
 
   try {
     if (interaction.customId === "checkInModal") {
-      await officeAccessUseCase.checkIn(
+      await officeAccessUseCase.fixIn(
         BigInt(interaction.user.id),
         dateTimeUTC.toDate(),
         interaction.user.username,
       );
       await roleManage.addRole(interaction);
+      updatePresence(interaction.client);
       await interaction.reply(
         `入室時刻を以下のように記録しました: \n${dateTimeUTC
           .tz("Asia/Tokyo")
           .format("YYYY/MM/DD HH:mm:ss")}`,
       );
     } else if (interaction.customId === "checkOutModal") {
-      await officeAccessUseCase.checkOut(
+      await officeAccessUseCase.fixOut(
         BigInt(interaction.user.id),
         dateTimeUTC.toDate(),
       );
       await roleManage.removeRole(interaction);
+      updatePresence(interaction.client);
       await interaction.reply(
         `退室時刻を以下のように記録しました: \n${dateTimeUTC
           .tz("Asia/Tokyo")
@@ -66,6 +69,6 @@ export async function handleModalSubmit(interaction: ModalSubmitInteraction) {
       );
     }
   } catch (error) {
-    await interaction.reply(`エラーが発生しました: ${error.message}`);
+    await interaction.reply("エラーが発生しました。");
   }
 }
