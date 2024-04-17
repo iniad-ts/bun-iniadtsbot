@@ -6,9 +6,14 @@ const officeAccessUseCase = {
   checkIn: async (userDiscordId: bigint, dateTime: Date, userName: string) => {
     const user = await userRepository.findUserByDiscordId(userDiscordId);
     if (!user) {
-      return await userRepository.createUser({
+      const newUser = await userRepository.createUser({
         userName: userName,
         userDiscordId: userDiscordId,
+      });
+      return await dailyRecordsRepository.createDailyRecord({
+        userId: newUser.user_id,
+        checkIn: dateTime,
+        is4f: false,
       });
     }
     const checkInRecord =
@@ -41,9 +46,14 @@ const officeAccessUseCase = {
   fixIn: async (userDiscordId: bigint, dateTime: Date, userName: string) => {
     const user = await userRepository.findUserByDiscordId(userDiscordId);
     if (!user) {
-      return await userRepository.createUser({
+      const newUser = await userRepository.createUser({
         userName: userName,
         userDiscordId: userDiscordId,
+      });
+      return await dailyRecordsRepository.createDailyRecord({
+        userId: newUser.user_id,
+        checkIn: dateTime,
+        is4f: false,
       });
     }
 
