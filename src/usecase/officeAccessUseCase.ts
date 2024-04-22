@@ -21,7 +21,7 @@ const officeAccessUseCase = {
         userDiscordId,
       );
     if (checkInRecord) {
-      throw new Error("チェックアウトされていない入室記録があります。");
+      throw new Error("すでに入室済みです。");
     }
 
     return await dailyRecordsRepository.createDailyRecord({
@@ -36,7 +36,7 @@ const officeAccessUseCase = {
         userDiscordId,
       );
     if (!latestRecord) {
-      throw new Error("チェックイン記録が見つかりませんでした。");
+      throw new Error("入室記録が見つかりませんでした。");
     }
 
     return await dailyRecordsRepository.updateDailyRecord(latestRecord.id, {
