@@ -4,7 +4,7 @@ import {
   ButtonInteraction,
   ButtonStyle,
 } from "discord.js";
-import { buildShowEmbed } from "../buildShowEmbed";
+import { buildShowEmbed } from "../buildEmbed";
 
 const handleShowRefreshButtonSubmit = async (
   interaction: ButtonInteraction,

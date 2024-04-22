@@ -101,6 +101,25 @@ const dailyRecordsRepository = {
     }
     return null;
   },
+  findDailyRecordsLatestByUserDiscordId: async (userDiscordId: bigint) => {
+    const user = await prisma.users.findFirst({
+      where: {
+        user_discord_id: userDiscordId,
+      },
+    });
+
+    if (user) {
+      return await prisma.daily_records.findFirst({
+        where: {
+          user_id: user.user_id,
+        },
+        orderBy: {
+          check_in: "desc",
+        },
+      });
+    }
+    return null;
+  },
   findAllUncheckedOutRecords: async () => {
     return await prisma.daily_records.findMany({
       where: {

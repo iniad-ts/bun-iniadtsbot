@@ -18,8 +18,8 @@ const rankingUseCase = {
         const stayTime = records
           .filter((record) => record.user_id === user.user_id)
           .reduce((total, { check_out, check_in }) => {
-            const lastTime = check_out ?? new Date();
-            const stayTime = lastTime.getTime() - check_in.getTime();
+            const lastTime = (check_out ?? new Date()).getTime();
+            const stayTime = lastTime - check_in.getTime();
             return total + stayTime;
           }, 0);
 

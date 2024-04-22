@@ -6,9 +6,14 @@ const officeAccessUseCase = {
   checkIn: async (userDiscordId: bigint, dateTime: Date, userName: string) => {
     const user = await userRepository.findUserByDiscordId(userDiscordId);
     if (!user) {
-      return await userRepository.createUser({
+      const newUser = await userRepository.createUser({
         userName: userName,
         userDiscordId: userDiscordId,
+      });
+      return await dailyRecordsRepository.createDailyRecord({
+        userId: newUser.user_id,
+        checkIn: dateTime,
+        is4f: false,
       });
     }
     const checkInRecord =
@@ -16,7 +21,7 @@ const officeAccessUseCase = {
         userDiscordId,
       );
     if (checkInRecord) {
-      throw new Error("チェックアウトされていない入室記録があります。");
+      throw new Error("すでに入室済みです。");
     }
 
     return await dailyRecordsRepository.createDailyRecord({
@@ -28,6 +33,54 @@ const officeAccessUseCase = {
   checkOut: async (userDiscordId: bigint, dateTime: Date) => {
     const latestRecord =
       await dailyRecordsRepository.findUncheckedOutRecordsByUserDiscordId(
+        userDiscordId,
+      );
+    if (!latestRecord) {
+      throw new Error("入室記録が見つかりませんでした。");
+    }
+
+    return await dailyRecordsRepository.updateDailyRecord(latestRecord.id, {
+      checkOut: dateTime,
+    });
+  },
+  fixIn: async (userDiscordId: bigint, dateTime: Date, userName: string) => {
+    const user = await userRepository.findUserByDiscordId(userDiscordId);
+    if (!user) {
+      const newUser = await userRepository.createUser({
+        userName: userName,
+        userDiscordId: userDiscordId,
+      });
+      return await dailyRecordsRepository.createDailyRecord({
+        userId: newUser.user_id,
+        checkIn: dateTime,
+        is4f: false,
+      });
+    }
+
+    const latestRecord =
+      await dailyRecordsRepository.findDailyRecordsLatestByUserDiscordId(
+        userDiscordId,
+      );
+
+    //レコードが存在しない=チェックインが完了していない場合
+    if (!latestRecord) {
+      await officeAccessUseCase.checkIn(userDiscordId, dateTime, userName);
+      return;
+    }
+    //latestrecordのチェックアウトが完了している、つまり入室していない場合もチェックインを行う
+    if (latestRecord?.check_out) {
+      await officeAccessUseCase.checkIn(userDiscordId, dateTime, userName);
+    }
+    //それ以外=入室中ならチェックイン時間を更新
+    else {
+      await dailyRecordsRepository.updateDailyRecord(latestRecord.id, {
+        checkIn: dateTime,
+      });
+    }
+  },
+  fixOut: async (userDiscordId: bigint, dateTime: Date) => {
+    const latestRecord =
+      await dailyRecordsRepository.findDailyRecordsLatestByUserDiscordId(
         userDiscordId,
       );
     if (!latestRecord) {
