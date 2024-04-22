@@ -34,7 +34,7 @@ const inCommand: Command<ChatInputCommandInteraction> = {
           .format("YYYY/MM/DD HH:mm:ss")}`,
       );
     } catch (e) {
-      await interaction.editReply("エラーが発生しました");
+      await interaction.editReply(`エラーが発生しました: ${e}`);
     }
   },
 };
