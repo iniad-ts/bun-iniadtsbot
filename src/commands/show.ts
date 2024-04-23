@@ -6,7 +6,7 @@ import {
   SlashCommandBuilder,
 } from "discord.js";
 import type { Command } from "../types";
-import { buildShowEmbed } from "../utils/buildEmbed";
+import genarateShowMessage from "../utils/genarateShowMessage";
 
 const showCommand: Command<ChatInputCommandInteraction> = {
   data: new SlashCommandBuilder()
@@ -14,9 +14,8 @@ const showCommand: Command<ChatInputCommandInteraction> = {
     .setDescription("入室中のユーザーを表示します。") as SlashCommandBuilder,
   execute: async (interaction) => {
     await interaction.deferReply();
-    const embed = await buildShowEmbed();
 
-    //TODO: in/outもボタンで操作できるようにする?
+    // ボタンの設定
     const row = new ActionRowBuilder<ButtonBuilder>().addComponents(
       new ButtonBuilder()
         .setCustomId("refresh")
@@ -32,7 +31,11 @@ const showCommand: Command<ChatInputCommandInteraction> = {
       return;
     }
 
-    await interaction.editReply({ embeds: [embed], components: [row] });
+    // 組み立てたメッセージとボタンを含むリプライを送信
+    await interaction.editReply({
+      content: await genarateShowMessage(),
+      components: [row],
+    });
   },
 };
 

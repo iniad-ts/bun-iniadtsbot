@@ -4,7 +4,7 @@ import {
   ButtonInteraction,
   ButtonStyle,
 } from "discord.js";
-import { buildShowEmbed } from "../buildEmbed";
+import genarateShowMessage from "../genarateShowMessage";
 
 const handleShowRefreshButtonSubmit = async (
   interaction: ButtonInteraction,
@@ -17,12 +17,14 @@ const handleShowRefreshButtonSubmit = async (
         .setStyle(ButtonStyle.Primary),
     );
 
-    const updatedEmbed = await buildShowEmbed();
     if (!interaction.channel) {
       console.log("Channel is not available.");
       return;
     }
-    await interaction.update({ embeds: [updatedEmbed], components: [row] });
+    await interaction.update({
+      content: await genarateShowMessage(),
+      components: [row],
+    });
   } catch (error) {
     console.error(error);
     await interaction.update({ content: "エラーが発生しました。" });
