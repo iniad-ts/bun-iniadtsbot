@@ -1,4 +1,3 @@
-import type { users } from "@prisma/client";
 import dailyRecordsRepository from "../repo/dailyRecordRepo";
 import userRepository from "../repo/userRepo";
 
@@ -16,6 +15,7 @@ const officeAccessUseCase = {
         is4f: false,
       });
     }
+    userRepository.updateUser(user.user_id, { userName: userName });
     const checkInRecord =
       await dailyRecordsRepository.findUncheckedOutRecordsByUserDiscordId(
         userDiscordId,
@@ -96,18 +96,23 @@ const officeAccessUseCase = {
       await dailyRecordsRepository.findAllUncheckedOutRecords();
     return uncheckedOutRecords.length;
   },
-  show: async () => {
+  show: async (): Promise<Array<{ userName: string; checkIn: Date }>> => {
+    // 未チェックアウトレコードを取得
     const uncheckedOutRecords =
       await dailyRecordsRepository.findAllUncheckedOutRecords();
-    const users: users[] = [];
-    for (const record of uncheckedOutRecords) {
+
+    const inUserList = uncheckedOutRecords.map(async (record) => {
       const user = await userRepository.findUserById(record.user_id);
-      if (user) {
-        users.push(user);
-      }
-    }
-    return { uncheckedOutRecords, users };
+      return { userName: user?.user_name, checkIn: record.check_in };
+    });
+
+    const allUsers = await Promise.all(inUserList);
+
+    const validUsers = allUsers.filter(
+      (user): user is { userName: string; checkIn: Date } => user !== null,
+    );
+
+    return validUsers;
   },
 };
-
 export default officeAccessUseCase;
