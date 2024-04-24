@@ -15,6 +15,7 @@ const officeAccessUseCase = {
         is4f: false,
       });
     }
+    userRepository.updateUser(user.user_id, { userName: userName });
     const checkInRecord =
       await dailyRecordsRepository.findUncheckedOutRecordsByUserDiscordId(
         userDiscordId,

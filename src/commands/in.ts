@@ -19,12 +19,15 @@ const inCommand: Command<ChatInputCommandInteraction> = {
     .setDescription("入室用のコマンドです。") as SlashCommandBuilder,
   execute: async (interaction) => {
     const dateTimeUTC = dayjs().utc();
+    const serverUser = await interaction.guild?.members.fetch(
+      interaction.user.id,
+    );
     try {
       await interaction.deferReply();
       await officeAccessUseCase.checkIn(
         BigInt(interaction.user.id),
         dateTimeUTC.toDate(),
-        interaction.user.username,
+        serverUser?.displayName || interaction.user.displayName,
       );
       await roleManage.addRole(interaction);
       updatePresence(interaction.client);
