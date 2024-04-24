@@ -14,7 +14,6 @@ const userRepository = {
       },
     });
   },
-
   updateUser: async (
     userId: number,
     userData: {
@@ -25,7 +24,11 @@ const userRepository = {
   ) => {
     return await prisma.users.update({
       where: { user_id: userId },
-      data: userData,
+      data: {
+        user_name: userData.userName,
+        user_discord_id: userData.userDiscordId,
+        user_github_id: userData.userGithubId,
+      },
     });
   },
 
