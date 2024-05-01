@@ -23,10 +23,15 @@ const rankingUseCase = {
             return total + stayTime;
           }, 0);
 
-        return { user, stayTime: formatMillisecondsToString(stayTime) };
+        return { user, stayTime };
       })
-      .filter(({ stayTime }) => stayTime !== "00:00:00")
-      .sort((a, b) => b.stayTime.localeCompare(a.stayTime));
+      .filter(({ stayTime }) => stayTime > 0)
+      .sort((a, b) => b.stayTime - a.stayTime)
+      .map((item) => ({
+        ...item,
+        stayTime: formatMillisecondsToString(item.stayTime),
+      }));
+
     return userStayTimes;
   },
   ranking_all: async () => {
@@ -57,10 +62,14 @@ const rankingUseCase = {
             return total;
           }, 0);
 
-        return { user, stayTime: formatMillisecondsToString(userRecords) };
+        return { user, stayTime: userRecords };
       })
-      .filter(({ stayTime }) => stayTime !== "00:00:00")
-      .sort((a, b) => b.stayTime.localeCompare(a.stayTime));
+      .filter(({ stayTime }) => stayTime > 0)
+      .sort((a, b) => b.stayTime - a.stayTime)
+      .map((item) => ({
+        ...item,
+        stayTime: formatMillisecondsToString(item.stayTime),
+      }));
 
     return userStayTimes;
   },
