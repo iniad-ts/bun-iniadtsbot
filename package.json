@@ -7,14 +7,19 @@
     "deploy": "bun ./src/deploy.ts",
     "start": "bun ./src/index.ts",
     "preinstall": "npx only-allow bun",
-    "format": "biome format --write ./src/"
+    "format": "biome format --write ./src/",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage"
   },
   "dependencies": {
     "@prisma/client": "5.9.1",
     "@t3-oss/env-core": "^0.8.0",
+    "@vitest/coverage-v8": "^3.0.6",
     "dayjs": "^1.11.10",
     "discord.js": "^14.14.1",
     "prisma": "^5.9.1",
+    "vitest": "^3.0.6",
     "zod": "^3.22.4"
   },
   "devDependencies": {
