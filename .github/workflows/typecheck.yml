@@ -1,4 +1,4 @@
-name: typecheck
+name: typecheck and tests
 
 on: [push, pull_request]
 
@@ -17,3 +17,6 @@ jobs:
 
       - name: Run typecheck
         run: bun run tsc --noEmit
+
+      - name: Run tests
+        run: bun run vitest run
