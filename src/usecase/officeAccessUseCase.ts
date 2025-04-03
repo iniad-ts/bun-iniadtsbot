@@ -107,8 +107,8 @@ const officeAccessUseCase = {
     });
 
     const allUsers = await Promise.all(inUserList);
-
-    const validUsers = allUsers.filter(
+   // Todo:オフィスか２食で活動しているかを分ける
+     const validUsers = allUsers.filter(
       (user): user is { userName: string; checkIn: Date } => user !== null,
     );
 

@@ -1,10 +1,10 @@
 import {
-    ActionRowBuilder,
-    ButtonBuilder,
-    ButtonInteraction,
-    ButtonStyle,
+  ActionRowBuilder,
+  ButtonBuilder,
+  ButtonInteraction,
+  ButtonStyle,
 } from "discord.js";
-import generateShowMessage from "../genarateShowMessage";
+import generateShowMessage from "../generateShowMessage";
 
 const handleShowRefreshButtonSubmit = async (
   interaction: ButtonInteraction,
