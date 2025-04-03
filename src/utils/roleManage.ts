@@ -10,9 +10,18 @@ export const roleManage = {
       await member?.roles.add(nowOfficeInRole);
     }
   },
+  addRole2: async (interaction: Interaction) => {
+    const nowOfficeInRole = interaction.guild?.roles.cache.find(
+      (role) => role.name === "2食活動中",
+    );
+    if (nowOfficeInRole) {
+      const member = interaction.guild?.members.cache.get(interaction.user.id);
+      await member?.roles.add(nowOfficeInRole);
+    }
+  },
   removeRole: async (interaction: Interaction) => {
     const nowOfficeInRole = interaction.guild?.roles.cache.find(
-      (role) => role.name === "オフィス活動中",
+      (role) => role.name === "オフィス活動中" || role.name === "2食活動中",
     );
     if (nowOfficeInRole) {
       const member = interaction.guild?.members.cache.get(interaction.user.id);

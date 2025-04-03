@@ -6,7 +6,7 @@ import {
   SlashCommandBuilder,
 } from "discord.js";
 import type { Command } from "../types";
-import genarateShowMessage from "../utils/genarateShowMessage";
+import generateShowMessage from "../utils/generateShowMessage";
 
 const showCommand: Command<ChatInputCommandInteraction> = {
   data: new SlashCommandBuilder()
@@ -33,7 +33,7 @@ const showCommand: Command<ChatInputCommandInteraction> = {
 
     // 組み立てたメッセージとボタンを含むリプライを送信
     await interaction.editReply({
-      content: await genarateShowMessage(),
+      content: await generateShowMessage(),
       components: [row],
     });
   },
