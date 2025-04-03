@@ -58,7 +58,7 @@ bun run start
 ```bash
 bun run start # start the bot
 bun run prettier # format code
-bun run deploy # deploy commands (run after adding/modifying command data)
+bun run deploy # deploy commands(run after adding/modifying command data)
 ```
 
 ## docker 起動

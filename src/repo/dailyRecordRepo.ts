@@ -6,6 +6,7 @@ const dailyRecordsRepository = {
     checkIn: Date;
     checkOut?: Date;
     is4f: boolean;
+    isCafeteria: boolean;
   }) => {
     return await prisma.daily_records.create({
       data: {
@@ -13,6 +14,7 @@ const dailyRecordsRepository = {
         check_in: recordData.checkIn,
         check_out: recordData.checkOut,
         is_4f: recordData.is4f,
+        isCafeteria: recordData.isCafeteria,
       },
     });
   },
@@ -31,6 +33,7 @@ const dailyRecordsRepository = {
       checkIn?: Date;
       checkOut?: Date;
       is4f?: boolean;
+      isCafeteria?: boolean;
     },
   ) => {
     return await prisma.daily_records.update({
@@ -41,6 +44,7 @@ const dailyRecordsRepository = {
         check_in: updateData.checkIn,
         check_out: updateData.checkOut,
         is_4f: updateData.is4f,
+        isCafeteria: updateData.isCafeteria,
       },
     });
   },

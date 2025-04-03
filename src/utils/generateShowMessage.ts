@@ -4,7 +4,7 @@ import officeAccessUseCase from "../usecase/officeAccessUseCase";
 
 dayjs.extend(timezone);
 
-const genarateShowMessage = async () => {
+const generateShowMessage = async () => {
   const userList = await officeAccessUseCase.show();
   let messageContent = "現在入室中のユーザー:\n";
   // ユーザーリストを文字列に整形
@@ -20,4 +20,4 @@ const genarateShowMessage = async () => {
   return messageContent;
 };
 
-export default genarateShowMessage;
+export default generateShowMessage;

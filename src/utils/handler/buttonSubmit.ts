@@ -4,7 +4,7 @@ import {
   ButtonInteraction,
   ButtonStyle,
 } from "discord.js";
-import genarateShowMessage from "../genarateShowMessage";
+import generateShowMessage from "../generateShowMessage";
 
 const handleShowRefreshButtonSubmit = async (
   interaction: ButtonInteraction,
@@ -22,7 +22,7 @@ const handleShowRefreshButtonSubmit = async (
       return;
     }
     await interaction.update({
-      content: await genarateShowMessage(),
+      content: await generateShowMessage(),
       components: [row],
     });
   } catch (error) {
