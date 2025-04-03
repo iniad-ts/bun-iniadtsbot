@@ -10,11 +10,11 @@ import {
 import type { Command } from "../types";
 ("../types");
 
-const inCommand: Command<ChatInputCommandInteraction> = {
+const fix2inCommand: Command<ChatInputCommandInteraction> = {
   data: new SlashCommandBuilder()
-    .setName("fixin")
+    .setName("fix2in")
     .setDescription(
-      "指定した時間で入室します。\n入室を忘れた場合に使用してください。",
+      "2食用の修正コマンドです",
     ) as SlashCommandBuilder,
   execute: async (interaction) => {
     const now = dayjs().tz("Asia/Tokyo");
@@ -46,4 +46,4 @@ const inCommand: Command<ChatInputCommandInteraction> = {
   },
 };
 
-export default inCommand;
+export default fix2inCommand;

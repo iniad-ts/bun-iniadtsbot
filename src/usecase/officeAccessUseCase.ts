@@ -13,6 +13,7 @@ const officeAccessUseCase = {
         userId: newUser.user_id,
         checkIn: dateTime,
         is4f: false,
+        isCafeteria: false,
       });
     }
     userRepository.updateUser(user.user_id, { userName: userName });
@@ -28,6 +29,38 @@ const officeAccessUseCase = {
       userId: user.user_id,
       checkIn: dateTime,
       is4f: false,
+      isCafeteria: false,
+    });
+  },
+
+  checkInCafeteria: async (userDiscordId: bigint, dateTime: Date, userName: string) => {
+    const user = await userRepository.findUserByDiscordId(userDiscordId);
+    if (!user) {
+      const newUser = await userRepository.createUser({
+        userName: userName,
+        userDiscordId: userDiscordId,
+      });
+      return await dailyRecordsRepository.createDailyRecord({
+        userId: newUser.user_id,
+        checkIn: dateTime,
+        is4f: false,
+        isCafeteria: true,
+      });
+    }
+    userRepository.updateUser(user.user_id, { userName: userName });
+    const checkInRecord =
+      await dailyRecordsRepository.findUncheckedOutRecordsByUserDiscordId(
+        userDiscordId,
+      );
+    if (checkInRecord) {
+      throw new Error("すでに入室済みです。");
+    }
+
+    return await dailyRecordsRepository.createDailyRecord({
+      userId: user.user_id,
+      checkIn: dateTime,
+      is4f: false,
+      isCafeteria: true,
     });
   },
   checkOut: async (userDiscordId: bigint, dateTime: Date) => {
@@ -54,6 +87,7 @@ const officeAccessUseCase = {
         userId: newUser.user_id,
         checkIn: dateTime,
         is4f: false,
+        isCafeteria: false,
       });
     }
 
@@ -75,6 +109,44 @@ const officeAccessUseCase = {
     else {
       await dailyRecordsRepository.updateDailyRecord(latestRecord.id, {
         checkIn: dateTime,
+      });
+    }
+  },
+
+  fixInCafeteria: async (userDiscordId: bigint, dateTime: Date, userName: string) => {
+    const user = await userRepository.findUserByDiscordId(userDiscordId);
+    if (!user) {
+      const newUser = await userRepository.createUser({
+        userName: userName,
+        userDiscordId: userDiscordId,
+      });
+      return await dailyRecordsRepository.createDailyRecord({
+        userId: newUser.user_id,
+        checkIn: dateTime,
+        is4f: false,
+        isCafeteria: true,
+      });
+    }
+
+    const latestRecord =
+      await dailyRecordsRepository.findDailyRecordsLatestByUserDiscordId(
+        userDiscordId,
+      );
+
+    //レコードが存在しない=チェックインが完了していない場合
+    if (!latestRecord) {
+      await officeAccessUseCase.checkInCafeteria(userDiscordId, dateTime, userName);
+      return;
+    }
+    //latestrecordのチェックアウトが完了している、つまり入室していない場合もチェックインを行う
+    if (latestRecord?.check_out) {
+      await officeAccessUseCase.checkInCafeteria(userDiscordId, dateTime, userName);
+    }
+    //それ以外=入室中ならチェックイン時間を更新
+    else {
+      await dailyRecordsRepository.updateDailyRecord(latestRecord.id, {
+        checkIn: dateTime,
+        isCafeteria: true,
       });
     }
   },
@@ -107,7 +179,6 @@ const officeAccessUseCase = {
     });
 
     const allUsers = await Promise.all(inUserList);
-   // Todo:オフィスか２食で活動しているかを分ける
      const validUsers = allUsers.filter(
       (user): user is { userName: string; checkIn: Date } => user !== null,
     );

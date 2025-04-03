@@ -23,7 +23,7 @@ const inCommand: Command<ChatInputCommandInteraction> = {
     );
     try {
       await interaction.deferReply();
-      await officeAccessUseCase.checkIn(
+      await officeAccessUseCase.checkInCafeteria(
         BigInt(interaction.user.id),
         dateTimeUTC.toDate(),
         serverUser?.displayName || interaction.user.displayName,
