@@ -58,7 +58,33 @@ bun run start
 ```bash
 bun run start # start the bot
 bun run prettier # format code
-bun run deploy # deploy commands (run after adding/modifying command data)
+bun run deploy # deploy commands(run after adding/modifying command data)
+```
+
+## docker 起動
+
+```bash
+docker compose up -d
+```
+
+## Prismaのセットアップ
+
+```bash
+npx prisma migrate dev
+npx prisma generate
+```
+
+## Prismaのスキーマを変更する場合
+
+```bash
+npx prisma db push
+npx prisma generate
+```
+
+## prisma studio 起動
+
+```bash
+npx prisma studio
 ```
 
 ## License

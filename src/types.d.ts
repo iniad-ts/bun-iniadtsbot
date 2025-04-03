@@ -11,9 +11,10 @@ declare module "discord.js" {
   }
 }
 
-export interface Command<T extends BaseInteraction> {
+export interface Command<T extends BaseInteraction = BaseInteraction> {
   data: SlashCommandBuilder;
   execute: (interaction: T) => Promise<void>;
+  handleModalSubmit?: (interaction: ModalSubmitInteraction) => Promise<void>;
 }
 
 export interface Event<T extends keyof ClientEvents> {
