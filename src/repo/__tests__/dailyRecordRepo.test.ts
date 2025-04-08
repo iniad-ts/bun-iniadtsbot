@@ -255,7 +255,7 @@ describe("dailyRecordsRepository", () => {
 
       vi.mocked(prisma.daily_records.findMany).mockResolvedValue(expectedRecords);
 
-      const records = await dailyRecordsRepository.findAllUncheckedOutRecords();
+      const records = await dailyRecordsRepository.findAllUncheckedOutRecordsInOffice();
 
       expect(prisma.daily_records.findMany).toHaveBeenCalledWith({
         where: { check_out: null },

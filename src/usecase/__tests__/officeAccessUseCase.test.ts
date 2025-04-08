@@ -1,7 +1,7 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import officeAccessUseCase from "../officeAccessUseCase";
 import dailyRecordsRepository from "../../repo/dailyRecordRepo";
 import userRepository from "../../repo/userRepo";
+import officeAccessUseCase from "../officeAccessUseCase";
 
 vi.mock("../../repo/dailyRecordRepo");
 vi.mock("../../repo/userRepo");
@@ -150,7 +150,7 @@ describe("officeAccessUseCase", () => {
         user_github_id: null,
       };
 
-      vi.mocked(dailyRecordsRepository.findAllUncheckedOutRecords).mockResolvedValue(mockRecords);
+      vi.mocked(dailyRecordsRepository.findAllUncheckedOutRecordsInOffice).mockResolvedValue(mockRecords);
       vi.mocked(userRepository.findUserById).mockResolvedValue(mockUser);
 
       const result = await officeAccessUseCase.show();
