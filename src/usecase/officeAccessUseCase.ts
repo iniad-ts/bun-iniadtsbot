@@ -164,16 +164,24 @@ const officeAccessUseCase = {
     });
   },
   countUncheckedOutRecords: async () => {
-    const uncheckedOutRecords =
-      await dailyRecordsRepository.findAllUncheckedOutRecords();
-    return uncheckedOutRecords.length;
+    const uncheckedOutRecordsInOffice =
+      await dailyRecordsRepository.findAllUncheckedOutRecordsInOffice();
+    const uncheckedOutRecordsInCafeteria =
+      await dailyRecordsRepository.findAllUncheckedOutRecordsInCafeteria();
+    return {
+      office: uncheckedOutRecordsInOffice.length,
+      cafeteria: uncheckedOutRecordsInCafeteria.length,
+    };
   },
   show: async (): Promise<Array<{ userName: string; checkIn: Date }>> => {
     // 未チェックアウトレコードを取得
-    const uncheckedOutRecords =
-      await dailyRecordsRepository.findAllUncheckedOutRecords();
+    const uncheckedOutRecordsInOffice =
+      await dailyRecordsRepository.findAllUncheckedOutRecordsInOffice();
 
-    const inUserList = uncheckedOutRecords.map(async (record) => {
+    const uncheckedOutRecordsInCafeteria =
+      await dailyRecordsRepository.findAllUncheckedOutRecordsInCafeteria();
+
+    const inUserList = uncheckedOutRecordsInOffice.map(async (record) => {
       const user = await userRepository.findUserById(record.user_id);
       return { userName: user?.user_name, checkIn: record.check_in };
     });
