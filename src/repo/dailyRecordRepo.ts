@@ -5,7 +5,7 @@ const dailyRecordsRepository = {
     userId: number;
     checkIn: Date;
     checkOut?: Date;
-    is4f: boolean;
+    is_4f: boolean;
     isCafeteria: boolean;
   }) => {
     return await prisma.daily_records.create({
@@ -13,7 +13,7 @@ const dailyRecordsRepository = {
         user_id: recordData.userId,
         check_in: recordData.checkIn,
         check_out: recordData.checkOut,
-        is_4f: recordData.is4f,
+        is_4f: recordData.is_4f,
         isCafeteria: recordData.isCafeteria,
       },
     });

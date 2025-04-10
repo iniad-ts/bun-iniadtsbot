@@ -12,7 +12,7 @@ const officeAccessUseCase = {
       return await dailyRecordsRepository.createDailyRecord({
         userId: newUser.user_id,
         checkIn: dateTime,
-        is4f: false,
+        is_4f: false,
         isCafeteria: false,
       });
     }
@@ -28,7 +28,7 @@ const officeAccessUseCase = {
     return await dailyRecordsRepository.createDailyRecord({
       userId: user.user_id,
       checkIn: dateTime,
-      is4f: false,
+      is_4f: false,
       isCafeteria: false,
     });
   },
@@ -43,7 +43,7 @@ const officeAccessUseCase = {
       return await dailyRecordsRepository.createDailyRecord({
         userId: newUser.user_id,
         checkIn: dateTime,
-        is4f: false,
+        is_4f: false,
         isCafeteria: true,
       });
     }
@@ -59,7 +59,7 @@ const officeAccessUseCase = {
     return await dailyRecordsRepository.createDailyRecord({
       userId: user.user_id,
       checkIn: dateTime,
-      is4f: false,
+      is_4f: false,
       isCafeteria: true,
     });
   },
@@ -86,7 +86,7 @@ const officeAccessUseCase = {
       return await dailyRecordsRepository.createDailyRecord({
         userId: newUser.user_id,
         checkIn: dateTime,
-        is4f: false,
+        is_4f: false,
         isCafeteria: false,
       });
     }
@@ -123,7 +123,7 @@ const officeAccessUseCase = {
       return await dailyRecordsRepository.createDailyRecord({
         userId: newUser.user_id,
         checkIn: dateTime,
-        is4f: false,
+        is_4f: false,
         isCafeteria: true,
       });
     }
