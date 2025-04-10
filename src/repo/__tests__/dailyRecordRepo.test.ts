@@ -53,6 +53,7 @@ describe("dailyRecordsRepository", () => {
           check_in: recordData.checkIn,
           check_out: undefined,
           is_4f: recordData.is4f,
+          isCafeteria: recordData.isCafeteria,
         },
       });
       expect(result).toEqual(expectedResult);
@@ -114,6 +115,7 @@ describe("dailyRecordsRepository", () => {
           check_in: updateData.checkIn,
           check_out: updateData.checkOut,
           is_4f: updateData.is4f,
+          isCafeteria: updateData.isCafeteria,
         },
       });
       expect(result).toEqual(expectedResult);
