@@ -32,7 +32,7 @@ const dailyRecordsRepository = {
     updateData: {
       checkIn?: Date;
       checkOut?: Date;
-      is4f?: boolean;
+      is_4f?: boolean;
       isCafeteria?: boolean;
     },
   ) => {
@@ -43,7 +43,7 @@ const dailyRecordsRepository = {
       data: {
         check_in: updateData.checkIn,
         check_out: updateData.checkOut,
-        is_4f: updateData.is4f,
+        is_4f: updateData.is_4f,
         isCafeteria: updateData.isCafeteria,
       },
     });
