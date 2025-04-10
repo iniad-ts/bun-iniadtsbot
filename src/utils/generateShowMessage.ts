@@ -14,7 +14,7 @@ const generateShowMessage = async () => {
       .format("YYYY/MM/DD HH:mm:ss")}\n`;
   });
 
-  messageContent += "\n２食内のユーザー:\n";
+  messageContent += "\n2食内のユーザー:\n";
   cafeteriaUsers.forEach((user, index) => {
     messageContent += `${index + 1}. ${user.userName} - ${dayjs(user.checkIn)
       .tz("Asia/Tokyo")
