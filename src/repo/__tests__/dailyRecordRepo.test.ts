@@ -30,7 +30,7 @@ describe("dailyRecordsRepository", () => {
       const recordData = {
         userId: 1,
         checkIn: new Date(),
-        is4f: true,
+        is_4f: true,
         isCafeteria: false,
       };
 
@@ -39,7 +39,7 @@ describe("dailyRecordsRepository", () => {
         user_id: recordData.userId,
         check_in: recordData.checkIn,
         check_out: null,
-        is_4f: recordData.is4f,
+        is_4f: recordData.is_4f,
         isCafeteria: recordData.isCafeteria,
       };
 
@@ -52,7 +52,7 @@ describe("dailyRecordsRepository", () => {
           user_id: recordData.userId,
           check_in: recordData.checkIn,
           check_out: undefined,
-          is_4f: recordData.is4f,
+          is_4f: recordData.is_4f,
           isCafeteria: recordData.isCafeteria,
         },
       });
@@ -92,7 +92,7 @@ describe("dailyRecordsRepository", () => {
       const updateData = {
         checkIn: new Date(),
         checkOut: new Date(),
-        is4f: false,
+        is_4f: false,
         isCafeteria: true,
       };
 
@@ -101,7 +101,7 @@ describe("dailyRecordsRepository", () => {
         user_id: 1,
         check_in: updateData.checkIn,
         check_out: updateData.checkOut,
-        is_4f: updateData.is4f,
+        is_4f: updateData.is_4f,
         isCafeteria: updateData.isCafeteria,
       };
 
@@ -114,7 +114,7 @@ describe("dailyRecordsRepository", () => {
         data: {
           check_in: updateData.checkIn,
           check_out: updateData.checkOut,
-          is_4f: updateData.is4f,
+          is_4f: updateData.is_4f,
           isCafeteria: updateData.isCafeteria,
         },
       });
