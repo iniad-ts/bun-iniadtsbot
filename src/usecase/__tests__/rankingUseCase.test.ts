@@ -1,8 +1,8 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import rankingUseCase from "../rankingUseCase";
 import dailyRecordsRepository from "../../repo/dailyRecordRepo";
 import userRepository from "../../repo/userRepo";
 import { getFiscalYearStartAndEnd } from "../../utils/timeUtils";
+import rankingUseCase from "../rankingUseCase";
 
 vi.mock("../../repo/dailyRecordRepo");
 vi.mock("../../repo/userRepo");
@@ -39,6 +39,7 @@ describe("rankingUseCase", () => {
           check_in: new Date("2024-01-01T10:00:00"),
           check_out: new Date("2024-01-01T18:00:00"),
           is_4f: false,
+          isCafeteria: false,
         },
         {
           id: 2,
@@ -46,6 +47,7 @@ describe("rankingUseCase", () => {
           check_in: new Date("2024-01-01T09:00:00"),
           check_out: new Date("2024-01-01T19:00:00"),
           is_4f: false,
+          isCafeteria: true,
         },
       ];
 
@@ -85,6 +87,7 @@ describe("rankingUseCase", () => {
           check_in: new Date("2024-01-01T10:00:00"),
           check_out: new Date("2024-01-01T10:00:00"), // 滞在時間0
           is_4f: false,
+          isCafeteria: false,
         },
       ];
 
@@ -128,6 +131,7 @@ describe("rankingUseCase", () => {
           check_in: new Date(fiscalYearStart.getTime() + 1000 * 60 * 60), // 年度開始から1時間後
           check_out: new Date(fiscalYearStart.getTime() + 1000 * 60 * 60 * 9), // 8時間滞在
           is_4f: false,
+          isCafeteria: false,
         },
         {
           id: 2,
@@ -135,6 +139,7 @@ describe("rankingUseCase", () => {
           check_in: new Date(fiscalYearStart.getTime() + 1000 * 60 * 60), // 年度開始から1時間後
           check_out: new Date(fiscalYearStart.getTime() + 1000 * 60 * 60 * 11), // 10時間滞在
           is_4f: false,
+          isCafeteria: true,
         },
       ];
 

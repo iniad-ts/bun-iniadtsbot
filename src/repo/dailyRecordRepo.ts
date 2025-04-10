@@ -124,13 +124,22 @@ const dailyRecordsRepository = {
     }
     return null;
   },
-  findAllUncheckedOutRecords: async () => {
+  findAllUncheckedOutRecordsInOffice: async () => {
     return await prisma.daily_records.findMany({
       where: {
         check_out: null,
+        isCafeteria: false,
       },
     });
   },
+  findAllUncheckedOutRecordsInCafeteria: async () => {
+    return await prisma.daily_records.findMany({
+      where: {
+        check_out: null,
+        isCafeteria: true,
+      },
+    });
+  }
 };
 
 export default dailyRecordsRepository;
