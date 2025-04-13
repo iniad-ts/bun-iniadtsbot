@@ -40,7 +40,7 @@ describe("dailyRecordsRepository", () => {
         check_in: recordData.checkIn,
         check_out: null,
         is_4f: recordData.is4f,
-        isCafeteria: recordData.isCafeteria,
+        is_cafeteria: recordData.isCafeteria,
       };
 
       vi.mocked(prisma.daily_records.create).mockResolvedValue(expectedResult);
@@ -53,7 +53,7 @@ describe("dailyRecordsRepository", () => {
           check_in: recordData.checkIn,
           check_out: undefined,
           is_4f: recordData.is4f,
-          isCafeteria: recordData.isCafeteria,
+          is_cafeteria: recordData.isCafeteria,
         },
       });
       expect(result).toEqual(expectedResult);
@@ -70,7 +70,7 @@ describe("dailyRecordsRepository", () => {
         check_in: checkIn,
         check_out: null,
         is_4f: true,
-        isCafeteria: false,
+        is_cafeteria: false,
       }];
 
       vi.mocked(prisma.daily_records.findMany).mockResolvedValue(expectedRecords);
@@ -102,7 +102,7 @@ describe("dailyRecordsRepository", () => {
         check_in: updateData.checkIn,
         check_out: updateData.checkOut,
         is_4f: updateData.is4f,
-        isCafeteria: updateData.isCafeteria,
+        is_cafeteria: updateData.isCafeteria,
       };
 
       vi.mocked(prisma.daily_records.update).mockResolvedValue(expectedResult);
@@ -125,7 +125,7 @@ describe("dailyRecordsRepository", () => {
   describe("deleteDailyRecord", () => {
     it("should delete a daily record", async () => {
       const recordId = 1;
-      const expectedResult = { id: recordId, user_id: 1, check_in: new Date(), check_out: null, is_4f: true, isCafeteria: false };
+      const expectedResult = { id: recordId, user_id: 1, check_in: new Date(), check_out: null, is_4f: true, is_cafeteria: false };
 
       vi.mocked(prisma.daily_records.delete).mockResolvedValue(expectedResult);
 
@@ -141,8 +141,8 @@ describe("dailyRecordsRepository", () => {
   describe("findAllDailyRecords", () => {
     it("should find all daily records", async () => {
       const expectedRecords = [
-        { id: 1, user_id: 1, check_in: new Date(), check_out: null, is_4f: true , isCafeteria: false },
-        { id: 2, user_id: 2, check_in: new Date(), check_out: new Date(), is_4f: false , isCafeteria: true },
+        { id: 1, user_id: 1, check_in: new Date(), check_out: null, is_4f: true , is_cafeteria: false },
+        { id: 2, user_id: 2, check_in: new Date(), check_out: new Date(), is_4f: false , is_cafeteria: true },
       ];
 
       vi.mocked(prisma.daily_records.findMany).mockResolvedValue(expectedRecords);
@@ -159,8 +159,8 @@ describe("dailyRecordsRepository", () => {
       const startDate = new Date("2024-01-01");
       const endDate = new Date("2024-01-31");
       const expectedRecords = [
-        { id: 1, user_id: 1, check_in: new Date("2024-01-15"), check_out: null, is_4f: true,isCafeteria: false },
-        { id: 2, user_id: 2, check_in: new Date("2024-01-20"), check_out: new Date("2024-01-25"), is_4f: false,isCafeteria: true },
+        { id: 1, user_id: 1, check_in: new Date("2024-01-15"), check_out: null, is_4f: true,is_cafeteria: false },
+        { id: 2, user_id: 2, check_in: new Date("2024-01-20"), check_out: new Date("2024-01-25"), is_4f: false,is_cafeteria: true },
       ];
 
       vi.mocked(prisma.daily_records.findMany).mockResolvedValue(expectedRecords);
@@ -184,7 +184,7 @@ describe("dailyRecordsRepository", () => {
       const userDiscordId = BigInt("123456789");
       const user = { user_id: 1, user_discord_id: userDiscordId, user_name: "test", user_github_id: null };
       const expectedRecords = [
-        { id: 1, user_id: 1, check_in: new Date(), check_out: null, is_4f: true,isCafeteria: false },
+        { id: 1, user_id: 1, check_in: new Date(), check_out: null, is_4f: true,is_cafeteria: false },
       ];
 
       vi.mocked(prisma.users.findFirst).mockResolvedValue(user);
@@ -208,7 +208,7 @@ describe("dailyRecordsRepository", () => {
     it("should find unchecked out record when user exists", async () => {
       const userDiscordId = BigInt("123456789");
       const user = { user_id: 1, user_discord_id: userDiscordId, user_name: "test", user_github_id: null };
-      const expectedRecord = { id: 1, user_id: 1, check_in: new Date(), check_out: null, is_4f: true,isCafeteria: false };
+      const expectedRecord = { id: 1, user_id: 1, check_in: new Date(), check_out: null, is_4f: true,is_cafeteria: false };
 
       vi.mocked(prisma.users.findFirst).mockResolvedValue(user);
       vi.mocked(prisma.daily_records.findFirst).mockResolvedValue(expectedRecord);
@@ -231,7 +231,7 @@ describe("dailyRecordsRepository", () => {
     it("should find latest record when user exists", async () => {
       const userDiscordId = BigInt("123456789");
       const user = { user_id: 1, user_discord_id: userDiscordId, user_name: "test", user_github_id: null };
-      const expectedRecord = { id: 1, user_id: 1, check_in: new Date(), check_out: new Date(), is_4f: true,isCafeteria: false };
+      const expectedRecord = { id: 1, user_id: 1, check_in: new Date(), check_out: new Date(), is_4f: true,is_cafeteria: false };
 
       vi.mocked(prisma.users.findFirst).mockResolvedValue(user);
       vi.mocked(prisma.daily_records.findFirst).mockResolvedValue(expectedRecord);
@@ -257,8 +257,8 @@ describe("dailyRecordsRepository", () => {
   describe("findAllUncheckedOutRecordsInOffice", () => {
     it("should find all unchecked out records in office", async () => {
       const expectedRecords = [
-        { id: 1, user_id: 1, check_in: new Date(), check_out: null, is_4f: true, isCafeteria: false },
-        { id: 2, user_id: 2, check_in: new Date(), check_out: null, is_4f: false, isCafeteria: false },
+        { id: 1, user_id: 1, check_in: new Date(), check_out: null, is_4f: true, is_cafeteria: false },
+        { id: 2, user_id: 2, check_in: new Date(), check_out: null, is_4f: false, is_cafeteria: false },
       ];
 
       vi.mocked(prisma.daily_records.findMany).mockResolvedValue(expectedRecords);
@@ -275,8 +275,8 @@ describe("dailyRecordsRepository", () => {
   describe("findAllUncheckedOutRecordsInCafeteria", () => {
     it("should find all unchecked out records in cafeteria", async () => {
       const expectedRecords = [
-        { id: 3, user_id: 3, check_in: new Date(), check_out: null, is_4f: true, isCafeteria: true },
-        { id: 4, user_id: 4, check_in: new Date(), check_out: null, is_4f: false, isCafeteria: true },
+        { id: 3, user_id: 3, check_in: new Date(), check_out: null, is_4f: true, is_cafeteria: true },
+        { id: 4, user_id: 4, check_in: new Date(), check_out: null, is_4f: false, is_cafeteria: true },
       ];
 
       vi.mocked(prisma.daily_records.findMany).mockResolvedValue(expectedRecords);

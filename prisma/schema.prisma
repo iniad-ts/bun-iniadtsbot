@@ -1,5 +1,5 @@
 generator client {
-  provider = "prisma-client-js"
+  provider      = "prisma-client-js"
   binaryTargets = ["native", "debian-openssl-1.1.x"]
 }
 
@@ -9,21 +9,21 @@ datasource db {
 }
 
 model daily_records {
-  id        Int       @id @default(autoincrement())
-  user_id   Int
-  check_in  DateTime  @db.Timestamp(6)
-  check_out DateTime? @db.Timestamp(6)
-  is_4f     Boolean
-  users     users     @relation(fields: [user_id], references: [user_id], onDelete: NoAction, onUpdate: NoAction)
-  isCafeteria Boolean @default(false)
+  id          Int       @id @default(autoincrement())
+  user_id     Int
+  check_in    DateTime  @db.Timestamp(6)
+  check_out   DateTime? @db.Timestamp(6)
+  is_4f       Boolean
+  is_cafeteria Boolean?  @default(false)
+  users       users     @relation(fields: [user_id], references: [user_id], onDelete: NoAction, onUpdate: NoAction)
 }
 
 model reserve {
-  id           Int     @id @default(autoincrement())
-  user_id      Int
-  reserve_date String  @db.VarChar(255)
+  id           Int      @id @default(autoincrement())
+  user_id      BigInt
+  reserve_date String   @db.VarChar(255)
   has_priority Boolean
-  users        users   @relation(fields: [user_id], references: [user_id], onDelete: NoAction, onUpdate: NoAction)
+  is_supporter Boolean?
 }
 
 model users {
@@ -32,5 +32,4 @@ model users {
   user_discord_id BigInt?
   user_github_id  String?
   daily_records   daily_records[]
-  reserve         reserve[]
 }

@@ -14,7 +14,7 @@ const dailyRecordsRepository = {
         check_in: recordData.checkIn,
         check_out: recordData.checkOut,
         is_4f: recordData.is4f,
-        isCafeteria: recordData.isCafeteria,
+        is_cafeteria: recordData.isCafeteria,
       },
     });
   },
@@ -44,7 +44,7 @@ const dailyRecordsRepository = {
         check_in: updateData.checkIn,
         check_out: updateData.checkOut,
         is_4f: updateData.is4f,
-        isCafeteria: updateData.isCafeteria,
+        is_cafeteria: updateData.isCafeteria,
       },
     });
   },
@@ -128,7 +128,7 @@ const dailyRecordsRepository = {
     return await prisma.daily_records.findMany({
       where: {
         check_out: null,
-        isCafeteria: false,
+        is_cafeteria: false,
       },
     });
   },
@@ -136,7 +136,7 @@ const dailyRecordsRepository = {
     return await prisma.daily_records.findMany({
       where: {
         check_out: null,
-        isCafeteria: true,
+        is_cafeteria: true,
       },
     });
   }
