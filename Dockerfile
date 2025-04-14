@@ -9,4 +9,4 @@ RUN bun prisma generate
 COPY . .
 
 EXPOSE 3000
-CMD ["bun", "prisma", "generate", "&&", "bun", "run", "start"]
+CMD ["/bin/sh", "-c", "bun prisma generate && bun run start"]
