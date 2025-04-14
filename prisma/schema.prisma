@@ -15,7 +15,7 @@ model daily_records {
   check_out DateTime? @db.Timestamp(6)
   is_4f     Boolean
   users     users     @relation(fields: [user_id], references: [user_id], onDelete: NoAction, onUpdate: NoAction)
-  isCafeteria Boolean @default(false)
+  is_cafeteria Boolean @default(false)
 }
 
 model reserve {

@@ -6,7 +6,7 @@ const dailyRecordsRepository = {
     checkIn: Date;
     checkOut?: Date;
     is_4f: boolean;
-    isCafeteria: boolean;
+    is_cafeteria: boolean;
   }) => {
     return await prisma.daily_records.create({
       data: {
@@ -14,7 +14,7 @@ const dailyRecordsRepository = {
         check_in: recordData.checkIn,
         check_out: recordData.checkOut,
         is_4f: recordData.is_4f,
-        isCafeteria: recordData.isCafeteria,
+        is_cafeteria: recordData.is_cafeteria,
       },
     });
   },
@@ -33,7 +33,7 @@ const dailyRecordsRepository = {
       checkIn?: Date;
       checkOut?: Date;
       is_4f?: boolean;
-      isCafeteria?: boolean;
+      is_cafeteria?: boolean;
     },
   ) => {
     return await prisma.daily_records.update({
@@ -44,7 +44,7 @@ const dailyRecordsRepository = {
         check_in: updateData.checkIn,
         check_out: updateData.checkOut,
         is_4f: updateData.is_4f,
-        isCafeteria: updateData.isCafeteria,
+        is_cafeteria: updateData.is_cafeteria,
       },
     });
   },
@@ -60,7 +60,7 @@ const dailyRecordsRepository = {
   findAllNonCafeteriaDailyRecords: async () => {
     return await prisma.daily_records.findMany({
       where: {
-        isCafeteria: false, // 現状はofficeの滞在時間だけを記録する
+        is_cafeteria: false, // 現状はofficeの滞在時間だけを記録する
       },
     });
   },
@@ -73,7 +73,7 @@ const dailyRecordsRepository = {
           lt: endDate,
         },
         // 現状はofficeの滞在時間だけを記録する
-        isCafeteria: false,
+        is_cafeteria: false,
       },
     });
   },
@@ -134,7 +134,7 @@ const dailyRecordsRepository = {
     return await prisma.daily_records.findMany({
       where: {
         check_out: null,
-        isCafeteria: false,
+        is_cafeteria: false,
       },
     });
   },
@@ -142,7 +142,7 @@ const dailyRecordsRepository = {
     return await prisma.daily_records.findMany({
       where: {
         check_out: null,
-        isCafeteria: true,
+        is_cafeteria: true,
       },
     });
   }

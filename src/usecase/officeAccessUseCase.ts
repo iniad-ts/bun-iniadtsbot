@@ -13,7 +13,7 @@ const officeAccessUseCase = {
         userId: newUser.user_id,
         checkIn: dateTime,
         is_4f: false,
-        isCafeteria: false,
+        is_cafeteria: false,
       });
     }
     userRepository.updateUser(user.user_id, { userName: userName });
@@ -29,7 +29,7 @@ const officeAccessUseCase = {
       userId: user.user_id,
       checkIn: dateTime,
       is_4f: false,
-      isCafeteria: false,
+      is_cafeteria: false,
     });
   },
 
@@ -44,7 +44,7 @@ const officeAccessUseCase = {
         userId: newUser.user_id,
         checkIn: dateTime,
         is_4f: false,
-        isCafeteria: true,
+        is_cafeteria: true,
       });
     }
     userRepository.updateUser(user.user_id, { userName: userName });
@@ -60,7 +60,7 @@ const officeAccessUseCase = {
       userId: user.user_id,
       checkIn: dateTime,
       is_4f: false,
-      isCafeteria: true,
+      is_cafeteria: true,
     });
   },
   checkOut: async (userDiscordId: bigint, dateTime: Date) => {
@@ -87,7 +87,7 @@ const officeAccessUseCase = {
         userId: newUser.user_id,
         checkIn: dateTime,
         is_4f: false,
-        isCafeteria: false,
+        is_cafeteria: false,
       });
     }
 
@@ -124,7 +124,7 @@ const officeAccessUseCase = {
         userId: newUser.user_id,
         checkIn: dateTime,
         is_4f: false,
-        isCafeteria: true,
+        is_cafeteria: true,
       });
     }
 
@@ -146,7 +146,7 @@ const officeAccessUseCase = {
     else {
       await dailyRecordsRepository.updateDailyRecord(latestRecord.id, {
         checkIn: dateTime,
-        isCafeteria: true,
+        is_cafeteria: true,
       });
     }
   },
