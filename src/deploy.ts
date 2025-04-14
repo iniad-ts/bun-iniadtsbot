@@ -1,7 +1,25 @@
+import { exec } from 'child_process';
 import { REST, Routes } from "discord.js";
+import { promisify } from 'util';
 
 import { env } from "./env";
 import { getCommands } from "./utils/core";
+
+const execAsync = promisify(exec);
+
+// Ensure Prisma client is generated before proceeding
+async function ensurePrismaClientGenerated() {
+  try {
+    console.log('Generating Prisma client...');
+    await execAsync('bun prisma generate');
+  } catch (error) {
+    console.error('Failed to generate Prisma client:', error);
+    process.exit(1);
+  }
+}
+
+// Call the function to ensure Prisma client is generated
+await ensurePrismaClientGenerated();
 
 const commands = await getCommands();
 const data = commands.map((command) => command.data.toJSON());
