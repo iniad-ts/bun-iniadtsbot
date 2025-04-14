@@ -87,6 +87,12 @@ npx prisma generate
 npx prisma studio
 ```
 
+## テスト実行
+
+```bash
+npx vitest src/...
+```
+
 ## License
 
 [MIT](https://choosealicense.com/licenses/mit/)

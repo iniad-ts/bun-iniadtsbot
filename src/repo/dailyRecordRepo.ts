@@ -57,8 +57,12 @@ const dailyRecordsRepository = {
     });
   },
 
-  findAllDailyRecords: async () => {
-    return await prisma.daily_records.findMany();
+  findAllNonCafeteriaDailyRecords: async () => {
+    return await prisma.daily_records.findMany({
+      where: {
+        isCafeteria: false, // 現状はofficeの滞在時間だけを記録する
+      },
+    });
   },
 
   findDailyRecordsInDateRange: async (startDate: Date, endDate: Date) => {
@@ -68,6 +72,8 @@ const dailyRecordsRepository = {
           gte: startDate,
           lt: endDate,
         },
+        // 現状はofficeの滞在時間だけを記録する
+        isCafeteria: false,
       },
     });
   },
