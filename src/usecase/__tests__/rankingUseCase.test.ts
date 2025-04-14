@@ -144,7 +144,7 @@ describe("rankingUseCase", () => {
       ];
 
       vi.mocked(userRepository.findAllUsers).mockResolvedValue(mockUsers);
-      vi.mocked(dailyRecordsRepository.findAllDailyRecords).mockResolvedValue(mockRecords);
+      vi.mocked(dailyRecordsRepository.findAllNonCafeteriaDailyRecords).mockResolvedValue(mockRecords);
 
       const result = await rankingUseCase.ranking_all();
 

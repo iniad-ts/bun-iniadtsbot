@@ -147,7 +147,7 @@ describe("dailyRecordsRepository", () => {
 
       vi.mocked(prisma.daily_records.findMany).mockResolvedValue(expectedRecords);
 
-      const records = await dailyRecordsRepository.findAllDailyRecords();
+      const records = await dailyRecordsRepository.findAllNonCafeteriaDailyRecords();
 
       expect(prisma.daily_records.findMany).toHaveBeenCalled();
       expect(records).toEqual(expectedRecords);
