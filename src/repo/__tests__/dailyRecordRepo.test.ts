@@ -30,7 +30,7 @@ describe("dailyRecordsRepository", () => {
       const recordData = {
         userId: 1,
         checkIn: new Date(),
-        is4f: true,
+        is_4f: true,
         isCafeteria: false,
       };
 
@@ -41,6 +41,7 @@ describe("dailyRecordsRepository", () => {
         check_out: null,
         is_4f: recordData.is4f,
         is_cafeteria: recordData.isCafeteria,
+
       };
 
       vi.mocked(prisma.daily_records.create).mockResolvedValue(expectedResult);
@@ -92,7 +93,7 @@ describe("dailyRecordsRepository", () => {
       const updateData = {
         checkIn: new Date(),
         checkOut: new Date(),
-        is4f: false,
+        is_4f: false,
         isCafeteria: true,
       };
 
@@ -114,7 +115,7 @@ describe("dailyRecordsRepository", () => {
         data: {
           check_in: updateData.checkIn,
           check_out: updateData.checkOut,
-          is_4f: updateData.is4f,
+          is_4f: updateData.is_4f,
           isCafeteria: updateData.isCafeteria,
         },
       });
@@ -147,14 +148,14 @@ describe("dailyRecordsRepository", () => {
 
       vi.mocked(prisma.daily_records.findMany).mockResolvedValue(expectedRecords);
 
-      const records = await dailyRecordsRepository.findAllDailyRecords();
+      const records = await dailyRecordsRepository.findAllNonCafeteriaDailyRecords();
 
       expect(prisma.daily_records.findMany).toHaveBeenCalled();
       expect(records).toEqual(expectedRecords);
     });
   });
 
-  describe("findDailyRecordsInDateRange", () => {
+  describe("findDailyNonCafeteriaRecordsInDateRange", () => {
     it("should find records in date range", async () => {
       const startDate = new Date("2024-01-01");
       const endDate = new Date("2024-01-31");
@@ -173,6 +174,7 @@ describe("dailyRecordsRepository", () => {
             gte: startDate,
             lt: endDate,
           },
+          isCafeteria: false,
         },
       });
       expect(records).toEqual(expectedRecords);

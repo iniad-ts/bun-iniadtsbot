@@ -38,7 +38,7 @@ const rankingUseCase = {
     const now = new Date();
     const { start, end } = getFiscalYearStartAndEnd(now);
 
-    const records = await dailyRecordsRepository.findAllDailyRecords();
+    const records = await dailyRecordsRepository.findAllNonCafeteriaDailyRecords();
     const users = await userRepository.findAllUsers();
 
     const userStayTimes = users
