@@ -30,7 +30,7 @@ describe("officeAccessUseCase", () => {
         check_in: dateTime,
         check_out: null,
         is_4f: false,
-        isCafeteria: false,
+        is_cafeteria: false,
       });
 
       const result = await officeAccessUseCase.checkIn(userDiscordId, dateTime, userName);
@@ -61,7 +61,7 @@ describe("officeAccessUseCase", () => {
         check_in: dateTime,
         check_out: null,
         is_4f: false,
-        isCafeteria: false,
+        is_cafeteria: false,
       });
 
       const result = await officeAccessUseCase.checkIn(userDiscordId, dateTime, userName);
@@ -87,7 +87,7 @@ describe("officeAccessUseCase", () => {
         check_in: new Date(),
         check_out: null,
         is_4f: false,
-        isCafeteria: false,
+        is_cafeteria: false,
       });
 
       await expect(officeAccessUseCase.checkIn(userDiscordId, dateTime, userName)).rejects.toThrow(
@@ -107,7 +107,7 @@ describe("officeAccessUseCase", () => {
         check_in: new Date(),
         check_out: null,
         is_4f: false,
-        isCafeteria: false,
+        is_cafeteria: false,
       });
       vi.mocked(dailyRecordsRepository.updateDailyRecord).mockResolvedValue({
         id: 1,
@@ -115,7 +115,7 @@ describe("officeAccessUseCase", () => {
         check_in: new Date(),
         check_out: dateTime,
         is_4f: false,
-        isCafeteria: false,
+        is_cafeteria: false,
       });
 
       const result = await officeAccessUseCase.checkOut(userDiscordId, dateTime);
@@ -145,7 +145,7 @@ describe("officeAccessUseCase", () => {
           check_in: new Date(),
           check_out: null,
           is_4f: false,
-          isCafeteria: false,
+          is_cafeteria: false,
         },
       ];
 
@@ -156,7 +156,7 @@ describe("officeAccessUseCase", () => {
           check_in: new Date(),
           check_out: null,
           is_4f: false,
-          isCafeteria: true,
+          is_cafeteria: true,
         },
       ];
 
