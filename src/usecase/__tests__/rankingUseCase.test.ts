@@ -89,6 +89,14 @@ describe("rankingUseCase", () => {
           is_4f: false,
           isCafeteria: false,
         },
+        {
+          id: 2,
+          user_id: 2,
+          check_in: new Date("2024-01-01T09:00:00"),
+          check_out: new Date("2024-01-01T19:00:00"),
+          is_4f: false,
+          isCafeteria: true,
+        },
       ];
 
       vi.mocked(userRepository.findAllUsers).mockResolvedValue(mockUsers);
@@ -96,7 +104,7 @@ describe("rankingUseCase", () => {
 
       const result = await rankingUseCase.ranking(from, until);
 
-      expect(result).toHaveLength(0);
+      expect(result).toHaveLength(1);
     });
   });
 

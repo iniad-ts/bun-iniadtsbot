@@ -154,7 +154,7 @@ describe("dailyRecordsRepository", () => {
     });
   });
 
-  describe("findDailyRecordsInDateRange", () => {
+  describe("findDailyNonCafeteriaRecordsInDateRange", () => {
     it("should find records in date range", async () => {
       const startDate = new Date("2024-01-01");
       const endDate = new Date("2024-01-31");
@@ -173,6 +173,7 @@ describe("dailyRecordsRepository", () => {
             gte: startDate,
             lt: endDate,
           },
+          isCafeteria: false,
         },
       });
       expect(records).toEqual(expectedRecords);
