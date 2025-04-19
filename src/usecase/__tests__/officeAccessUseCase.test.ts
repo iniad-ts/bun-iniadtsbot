@@ -30,7 +30,8 @@ describe("officeAccessUseCase", () => {
         check_in: dateTime,
         check_out: null,
         is_4f: false,
-        is_cafeteria: false,
+        is_1f: false,
+        is_2f: false,
       });
 
       const result = await officeAccessUseCase.checkIn(userDiscordId, dateTime, userName);
@@ -61,7 +62,8 @@ describe("officeAccessUseCase", () => {
         check_in: dateTime,
         check_out: null,
         is_4f: false,
-        is_cafeteria: false,
+        is_1f: false,
+        is_2f: false,
       });
 
       const result = await officeAccessUseCase.checkIn(userDiscordId, dateTime, userName);
@@ -87,7 +89,8 @@ describe("officeAccessUseCase", () => {
         check_in: new Date(),
         check_out: null,
         is_4f: false,
-        is_cafeteria: false,
+        is_1f: false,
+        is_2f: false,
       });
 
       await expect(officeAccessUseCase.checkIn(userDiscordId, dateTime, userName)).rejects.toThrow(
@@ -107,7 +110,8 @@ describe("officeAccessUseCase", () => {
         check_in: new Date(),
         check_out: null,
         is_4f: false,
-        is_cafeteria: false,
+        is_1f: false,
+        is_2f: false,
       });
       vi.mocked(dailyRecordsRepository.updateDailyRecord).mockResolvedValue({
         id: 1,
@@ -115,7 +119,8 @@ describe("officeAccessUseCase", () => {
         check_in: new Date(),
         check_out: dateTime,
         is_4f: false,
-        is_cafeteria: false,
+        is_1f: false,
+        is_2f: false,
       });
 
       const result = await officeAccessUseCase.checkOut(userDiscordId, dateTime);
@@ -145,18 +150,32 @@ describe("officeAccessUseCase", () => {
           check_in: new Date(),
           check_out: null,
           is_4f: false,
-          is_cafeteria: false,
+          is_1f: false,
+          is_2f: false,
         },
       ];
 
-      const mockCafeteriaRecords = [
+      const mock1fRecords = [
         {
           id: 2,
           user_id: 2,
           check_in: new Date(),
           check_out: null,
           is_4f: false,
-          is_cafeteria: true,
+          is_1f: true,
+          is_2f: false,
+        },
+      ];
+
+      const mock2fRecords = [
+        {
+          id: 3,
+          user_id: 3,
+          check_in: new Date(),
+          check_out: null,
+          is_4f: false,
+          is_1f: false,
+          is_2f: true,
         },
       ];
 
@@ -167,20 +186,29 @@ describe("officeAccessUseCase", () => {
         user_github_id: null,
       };
 
-      const mockCafeteriaUser = {
+      const mock1fUser = {
         user_id: 2,
-        user_name: "cafeteriaUser",
+        user_name: "1fUser",
         user_discord_id: BigInt("987654321"),
         user_github_id: null,
       };
 
+      const mock2fUser = {
+        user_id: 3,
+        user_name: "2fUser",
+        user_discord_id: BigInt("111111111"),
+        user_github_id: null,
+      };
+
       vi.mocked(dailyRecordsRepository.findAllUncheckedOutRecordsInOffice).mockResolvedValue(mockOfficeRecords);
-      vi.mocked(dailyRecordsRepository.findAllUncheckedOutRecordsInCafeteria).mockResolvedValue(mockCafeteriaRecords);
+      vi.mocked(dailyRecordsRepository.findAllUncheckedOutRecordsIn1f).mockResolvedValue(mock1fRecords);
+      vi.mocked(dailyRecordsRepository.findAllUncheckedOutRecordsIn2f).mockResolvedValue(mock2fRecords);
 
       // userRepositoryのモック設定を条件付きにする
       vi.mocked(userRepository.findUserById).mockImplementation(async (userId) => {
         if (userId === 1) return mockOfficeUser;
-        if (userId === 2) return mockCafeteriaUser;
+        if (userId === 2) return mock1fUser;
+        if (userId === 3) return mock2fUser;
         return null;
       });
 
@@ -188,17 +216,22 @@ describe("officeAccessUseCase", () => {
 
       // 返り値がオブジェクト構造になっていることを確認
       expect(result).toHaveProperty('officeUsers');
-      expect(result).toHaveProperty('cafeteriaUsers');
+      expect(result).toHaveProperty('usersIn1f');
+      expect(result).toHaveProperty('usersIn2f');
 
       // オフィスユーザーの検証
       expect(result.officeUsers).toHaveLength(1);
       expect(result.officeUsers[0].userName).toBe(mockOfficeUser.user_name);
       expect(result.officeUsers[0].checkIn).toBeDefined();
 
-      // カフェテリアユーザーの検証
-      expect(result.cafeteriaUsers).toHaveLength(1);
-      expect(result.cafeteriaUsers[0].userName).toBe(mockCafeteriaUser.user_name);
-      expect(result.cafeteriaUsers[0].checkIn).toBeDefined();
+      // 1食ユーザーの検証
+      expect(result.usersIn1f).toHaveLength(1);
+      expect(result.usersIn1f[0].userName).toBe(mock1fUser.user_name);
+      expect(result.usersIn1f[0].checkIn).toBeDefined();
+      // 2食ユーザーの検証
+      expect(result.usersIn2f).toHaveLength(1);
+      expect(result.usersIn2f[0].userName).toBe(mock2fUser.user_name);
+      expect(result.usersIn2f[0]).toBeDefined();
     });
   });
 });

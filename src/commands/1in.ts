@@ -14,8 +14,8 @@ dayjs.extend(customParseFormat);
 
 const inCommand: Command<ChatInputCommandInteraction> = {
   data: new SlashCommandBuilder()
-    .setName("2in")
-    .setDescription("2食入室用のコマンドです。") as SlashCommandBuilder,
+    .setName("1in")
+    .setDescription("1食入室用のコマンドです。") as SlashCommandBuilder,
   execute: async (interaction) => {
     const dateTimeUTC = dayjs().utc();
     const serverUser = await interaction.guild?.members.fetch(
@@ -23,12 +23,12 @@ const inCommand: Command<ChatInputCommandInteraction> = {
     );
     try {
       await interaction.deferReply();
-      await officeAccessUseCase.checkIn2f(
+      await officeAccessUseCase.checkIn1f(
         BigInt(interaction.user.id),
         dateTimeUTC.toDate(),
         serverUser?.displayName || interaction.user.displayName,
       );
-      await roleManage.addRole2(interaction);
+      await roleManage.addRole1(interaction);
       updatePresence(interaction.client);
       await interaction.editReply(
         `入室時刻を以下のように記録しました:\n ${dateTimeUTC

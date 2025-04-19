@@ -55,7 +55,34 @@ export async function handleModalSubmit(interaction: ModalSubmitInteraction) {
           .tz("Asia/Tokyo")
           .format("YYYY/MM/DD HH:mm:ss")}`,
       );
-    } else if (interaction.customId === "checkOutModal") {
+    } else if (interaction.customId === "checkIn1fModal") {
+      await officeAccessUseCase.fix1In(
+        BigInt(interaction.user.id),
+        dateTimeUTC.toDate(),
+        interaction.user.username,
+      );
+      await roleManage.addRole1(interaction);
+      updatePresence(interaction.client);
+      await interaction.reply(
+        `入室時刻を以下のように記録しました: \n${dateTimeUTC
+          .tz("Asia/Tokyo")
+          .format("YYYY/MM/DD HH:mm:ss")}`,
+      );
+    } else if (interaction.customId === "checkIn2fModal") {
+      await officeAccessUseCase.fix2In(
+        BigInt(interaction.user.id),
+        dateTimeUTC.toDate(),
+        interaction.user.username,
+      );
+      await roleManage.addRole2(interaction);
+      updatePresence(interaction.client);
+      await interaction.reply(
+        `入室時刻を以下のように記録しました: \n${dateTimeUTC
+          .tz("Asia/Tokyo")
+          .format("YYYY/MM/DD HH:mm:ss")}`,
+      );
+    }
+    else if (interaction.customId === "checkOutModal") {
       await officeAccessUseCase.fixOut(
         BigInt(interaction.user.id),
         dateTimeUTC.toDate(),
