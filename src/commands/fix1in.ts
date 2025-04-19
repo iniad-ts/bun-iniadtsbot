@@ -12,14 +12,14 @@ import type { Command } from "../types";
 
 const fix2inCommand: Command<ChatInputCommandInteraction> = {
   data: new SlashCommandBuilder()
-    .setName("fix2in")
+    .setName("fix1in")
     .setDescription(
-      "2食用の修正コマンドです",
+      "1食用の修正コマンドです",
     ) as SlashCommandBuilder,
   execute: async (interaction) => {
     const now = dayjs().tz("Asia/Tokyo");
     const modal = new ModalBuilder()
-      .setCustomId("checkIn2fModal")
+      .setCustomId("checkIn1fModal")
       .setTitle("入室時間の入力");
 
     // 日付入力フィールド

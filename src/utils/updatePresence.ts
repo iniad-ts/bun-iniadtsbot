@@ -5,8 +5,8 @@ const updatePresence = async (client: Client) => {
   if (!client.user) {
     return;
   }
- const { office: officeCount, cafeteria: cafeteriaCount } = await officeAccessUseCase.countUncheckedOutRecords();
-client.user.setActivity(`入室中: オフィス${officeCount}人, 2食${cafeteriaCount}人`);
+ const { lenOffice: lenOffice, len1f: len1f, len2f:len2f  } = await officeAccessUseCase.countUncheckedOutRecords();
+client.user.setActivity(`オフィス${lenOffice}人,1食${len1f}人, 2食${len2f}人`);
 };
 
 export default updatePresence;

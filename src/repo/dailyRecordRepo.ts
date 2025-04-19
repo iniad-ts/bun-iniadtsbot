@@ -6,7 +6,8 @@ const dailyRecordsRepository = {
     checkIn: Date;
     checkOut?: Date;
     is_4f: boolean;
-    is_cafeteria: boolean;
+    is_1f: boolean;
+    is_2f: boolean;
   }) => {
     return await prisma.daily_records.create({
       data: {
@@ -14,7 +15,8 @@ const dailyRecordsRepository = {
         check_in: recordData.checkIn,
         check_out: recordData.checkOut,
         is_4f: recordData.is_4f,
-        is_cafeteria: recordData.is_cafeteria,
+        is_1f: recordData.is_1f,
+        is_2f: recordData.is_2f,
       },
     });
   },
@@ -33,7 +35,8 @@ const dailyRecordsRepository = {
       checkIn?: Date;
       checkOut?: Date;
       is_4f?: boolean;
-      is_cafeteria?: boolean;
+      is_1f?: boolean;
+      is_2f?: boolean;
     },
   ) => {
     return await prisma.daily_records.update({
@@ -44,7 +47,8 @@ const dailyRecordsRepository = {
         check_in: updateData.checkIn,
         check_out: updateData.checkOut,
         is_4f: updateData.is_4f,
-        is_cafeteria: updateData.is_cafeteria,
+        is_1f: updateData.is_1f,
+        is_2f: updateData.is_2f,
       },
     });
   },
@@ -57,10 +61,11 @@ const dailyRecordsRepository = {
     });
   },
 
-  findAllNonCafeteriaDailyRecords: async () => {
+  findAllOfficeDailyRecords: async () => {
     return await prisma.daily_records.findMany({
       where: {
-        is_cafeteria: false, // 現状はofficeの滞在時間だけを記録する
+        is_1f:false,
+        is_2f:false // 現状はofficeの滞在時間だけを記録する
       },
     });
   },
@@ -73,7 +78,8 @@ const dailyRecordsRepository = {
           lt: endDate,
         },
         // 現状はofficeの滞在時間だけを記録する
-        is_cafeteria: false,
+        is_1f: false,
+        is_2f: false,
       },
     });
   },
@@ -134,18 +140,29 @@ const dailyRecordsRepository = {
     return await prisma.daily_records.findMany({
       where: {
         check_out: null,
-        is_cafeteria: false,
+        is_1f: false,
+        is_2f: false,
       },
     });
   },
-  findAllUncheckedOutRecordsInCafeteria: async () => {
+  findAllUncheckedOutRecordsIn1f: async () => {
     return await prisma.daily_records.findMany({
       where: {
         check_out: null,
-        is_cafeteria: true,
+        is_1f: true,
+        is_2f: false,
       },
     });
-  }
-};
+  },
+  findAllUncheckedOutRecordsIn2f: async () => {
+    return await prisma.daily_records.findMany({
+      where: {
+        check_out: null,
+        is_1f: false,
+        is_2f: true,
+      },
+    });
+},
+}
 
 export default dailyRecordsRepository;
