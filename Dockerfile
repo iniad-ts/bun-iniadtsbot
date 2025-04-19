@@ -10,4 +10,4 @@ RUN bun prisma generate
 COPY . .
 
 EXPOSE 3000
-CMD ["/bin/sh", "-c", "npx prisma db push && npx prisma generate && bun prisma generate && bun run start"]
+CMD ["/bin/sh", "-c", "bun prisma db push && bun prisma generate && bun prisma generate && bun run start"]
