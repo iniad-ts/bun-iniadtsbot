@@ -4,6 +4,7 @@ WORKDIR /app
 
 COPY package.json bun.lockb ./
 RUN bun install
+RUN apt-get update -y && apt-get install -y openssl
 RUN bun prisma generate
 
 COPY . .
