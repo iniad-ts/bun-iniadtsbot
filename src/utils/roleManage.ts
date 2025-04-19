@@ -30,7 +30,7 @@ export const roleManage = {
   },
   removeRole: async (interaction: Interaction) => {
     const officeRoles = interaction.guild?.roles.cache.filter(
-      (role) => role.name === "オフィス活動中" || role.name === "2食活動中",
+      (role) => role.name === "オフィス活動中" || role.name === "1食活動中" || role.name === "2食活動中",
     );
 
     if (officeRoles && officeRoles.size > 0) {
