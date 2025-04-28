@@ -6,6 +6,21 @@ import { handleModalSubmit } from "../utils/handler/modalSubmit";
 const interactionCreateEvent: Event<Events.InteractionCreate> = {
   name: Events.InteractionCreate,
   execute: async (interaction) => {
+    // DMでのコマンド使用を禁止
+    if (!interaction.guild) {
+      if (
+        interaction.isChatInputCommand() ||
+        interaction.isButton() ||
+        interaction.isModalSubmit()
+      ) {
+        await interaction.reply({
+          content:
+            "❌ **エラー** ❌\n```diff\n- このコマンドはiniad.tsサーバーの活動管理チャンネルで使用してください！\n```\n⚠️ DMでは使用できません ⚠️",
+          ephemeral: true,
+        });
+      }
+      return;
+    }
     if (interaction.isModalSubmit()) await handleModalSubmit(interaction);
     if (interaction.isButton()) await buttonSubmitHandler(interaction);
 
